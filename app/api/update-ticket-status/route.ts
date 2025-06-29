@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     if (!ticketId || !status) {
       return NextResponse.json(
         { success: false, error: "ticketId e status obrigatórios." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
         ExpressionAttributeValues: {
           ":status": { S: status },
         },
-      })
+      }),
     );
 
     return NextResponse.json({ success: "Ticket atualizado." });
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     console.error("[update-ticket-status] Erro:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

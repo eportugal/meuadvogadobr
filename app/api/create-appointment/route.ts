@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     if (!lawyerId || !clientId || !lawyerName || !date || !time) {
       return NextResponse.json(
         { success: false, error: "Faltando campos obrigatórios." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
           ":inc": { N: "1" },
         },
         ReturnValues: "UPDATED_NEW",
-      })
+      }),
     );
 
     const appointmentId = counter.Attributes?.currentValue?.N;
@@ -69,19 +69,19 @@ export async function POST(req: NextRequest) {
       new PutItemCommand({
         TableName: "appointments",
         Item: item,
-      })
+      }),
     );
 
-// 🕒 Criar horário do lembrete (30 minutos antes)
-const appointmentTime = new Date(`${date}T${time}:00-03:00`);
-const now = new Date();
-const reminderTime = new Date(appointmentTime.getTime() - 30 * 60 * 1000);
+    // 🕒 Criar horário do lembrete (30 minutos antes)
+    const appointmentTime = new Date(`${date}T${time}:00-03:00`);
+    const now = new Date();
+    const reminderTime = new Date(appointmentTime.getTime() - 30 * 60 * 1000);
 
-// Se lembrete for no passado, agende para 2 minutos no futuro
-const scheduleTime =
-  reminderTime <= now
-    ? new Date(now.getTime() + 2 * 60 * 1000)
-    : reminderTime;
+    // Se lembrete for no passado, agende para 2 minutos no futuro
+    const scheduleTime =
+      reminderTime <= now
+        ? new Date(now.getTime() + 2 * 60 * 1000)
+        : reminderTime;
 
     const scheduleName = `reminder-${appointmentId}`;
     const scheduleExpression = `at(${scheduleTime.toISOString().split(".")[0]})`;
@@ -98,7 +98,7 @@ const scheduleTime =
             "arn:aws:iam::941377122403:role/service-role/sendAppointmentReminder-role-qnt8jleg",
           Input: JSON.stringify({ appointmentId }),
         },
-      })
+      }),
     );
 
     return NextResponse.json({
@@ -110,7 +110,7 @@ const scheduleTime =
     console.error("❌ [create-appointment] Erro:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

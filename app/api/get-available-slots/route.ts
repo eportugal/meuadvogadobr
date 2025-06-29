@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
     if (!lawyerId) {
       return NextResponse.json(
         { success: false, error: "Parâmetro lawyerId obrigatório." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -55,7 +55,7 @@ export async function GET(req: NextRequest) {
       new GetItemCommand({
         TableName: "lawyer_availability",
         Key: { lawyerId: { S: lawyerId } },
-      })
+      }),
     );
 
     const scheduleRaw = availabilityResult.Item?.weeklySchedule?.M;
@@ -87,7 +87,7 @@ export async function GET(req: NextRequest) {
             ":lid": { S: lawyerId },
             ":date": { S: date },
           },
-        })
+        }),
       );
 
       occupiedMap[date] = (res.Items || []).map((item: any) => item.time.S);
@@ -112,7 +112,7 @@ export async function GET(req: NextRequest) {
     console.error("❌ [get-available-slots] Erro:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

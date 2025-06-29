@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
     if (!number || !uf || !nome) {
       return NextResponse.json(
         { success: false, error: "Número, UF e nome são obrigatórios." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
     console.error("❌ Erro ao validar OAB:", err);
     return NextResponse.json(
       { success: false, error: "Erro interno no servidor" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

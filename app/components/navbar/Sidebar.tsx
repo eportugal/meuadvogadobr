@@ -89,7 +89,7 @@ export default function Sidebar({
   const fullName =
     dbUser?.firstName || dbUser?.lastName
       ? `${dbUser?.firstName ?? ""} ${dbUser?.lastName ?? ""}`.trim()
-      : dbUser?.email?.split("@")[0] ?? "Usuário";
+      : (dbUser?.email?.split("@")[0] ?? "Usuário");
 
   const MenuItemComponent = ({ item }: { item: MenuItem }) => {
     const Icon = item.icon;

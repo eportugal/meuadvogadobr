@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     if (!lawyerId || !weeklySchedule || typeof weeklySchedule !== "object") {
       return NextResponse.json(
         { success: false, error: "Campos obrigatórios ausentes ou inválidos." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
           lawyerId: { S: lawyerId },
           weeklySchedule: { M: scheduleForDynamo },
         },
-      })
+      }),
     );
 
     return NextResponse.json({
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     console.error("❌ [set-availability] Erro:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

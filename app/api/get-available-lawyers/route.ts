@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     if (!area) {
       return NextResponse.json(
         { success: false, error: "Área de atuação é obrigatória." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
     const res = await client.send(
       new ScanCommand({
         TableName: "users",
-      })
+      }),
     );
 
     // 2. Filtrar apenas advogados ativos que atuam na área
@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
           new GetItemCommand({
             TableName: "lawyer_availability",
             Key: { lawyerId: { S: lawyer.id } },
-          })
+          }),
         );
 
         const availabilityItem = availabilityRes.Item ?? {};
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
           ...lawyer,
           availability,
         };
-      })
+      }),
     );
 
     return NextResponse.json({
@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
     console.error("Erro em /api/get-available-lawyers:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

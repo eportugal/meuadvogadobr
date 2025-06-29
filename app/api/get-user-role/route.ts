@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   if (!email) {
     return NextResponse.json(
       { success: false, error: "Email obrigatório" },
-      { status: 400 }
+      { status: 400 },
     );
   }
 
@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
           ":email": { S: email },
         },
         Limit: 1,
-      })
+      }),
     );
 
     const item = result.Items?.[0];
@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
     if (!item) {
       return NextResponse.json(
         { success: false, error: "Usuário não encontrado" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
     console.error("[get-user-role] Erro:", err);
     return NextResponse.json(
       { success: false, error: "Erro interno" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

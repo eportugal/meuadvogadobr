@@ -19,7 +19,7 @@ async function searchDuckDuckGo(query: string): Promise<string> {
   console.log("🔍 [DuckDuckGo] Raw search with HTML scrape:", query);
 
   const response = await fetch(
-    `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`
+    `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`,
   );
   const html = await response.text();
 
