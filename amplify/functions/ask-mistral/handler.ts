@@ -9,7 +9,7 @@ const openai = new OpenAI({
 
 async function searchDuckDuckGo(query: string): Promise<string> {
   const response = await fetch(
-    `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`
+    `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`,
   );
   const html = await response.text();
   const $ = cheerio.load(html);
