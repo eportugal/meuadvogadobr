@@ -2,7 +2,9 @@ import { defineBackend } from "@aws-amplify/backend";
 import { auth } from "./auth/resource.js";
 import { data } from "./data/resource.js";
 
-defineBackend({
+// Deixe o backend.ts simples como antes
+export const backend = defineBackend({
   auth,
   data,
+  askMistral,
 });

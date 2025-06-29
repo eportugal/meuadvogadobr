@@ -2,12 +2,11 @@ import { NextRequest } from "next/server";
 import OpenAI from "openai";
 import * as cheerio from "cheerio";
 
-// ⚠️ NÃO precisa mais do duckduckgo-search quebrado.
-interface DuckDuckGoResult {
-  title: string;
-  snippet: string;
-  url: string;
-}
+// 1. Força a rota a ser sempre dinâmica, evitando erros de pré-renderização no build.
+export const dynamic = "force-dynamic";
+
+// 2. Garante que a rota rode no ambiente Node.js, necessário para o 'cheerio'.
+export const runtime = "nodejs";
 
 const openai = new OpenAI({
   apiKey: process.env.MISTRAL_API_KEY,
@@ -16,16 +15,14 @@ const openai = new OpenAI({
 
 // 🔍 HTML scraping direto do DuckDuckGo
 async function searchDuckDuckGo(query: string): Promise<string> {
+  // ... seu código de busca continua o mesmo
   console.log("🔍 [DuckDuckGo] Raw search with HTML scrape:", query);
-
   const response = await fetch(
     `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`,
   );
   const html = await response.text();
-
   const $ = cheerio.load(html);
   const results: string[] = [];
-
   $(".result")
     .slice(0, 5)
     .each((i, elem) => {
@@ -34,18 +31,15 @@ async function searchDuckDuckGo(query: string): Promise<string> {
       const snippet = $(elem).find(".result__snippet").text();
       results.push(`**${title}**\n${snippet}\nURL: ${url}`);
     });
-
   console.log("✅ [DuckDuckGo] Parsed results:", results);
-
   return results.join("\n\n");
 }
 
+// O resto da sua função POST continua exatamente o mesmo
 export async function POST(req: NextRequest) {
   console.log("🌐 [API] POST /api/ask-mistral called");
-
   const { question } = await req.json();
   console.log("❓ [API] Received question:", question);
-
   try {
     const webContext = await searchDuckDuckGo(question);
     console.log("📚 [API] Web context built:", webContext);
@@ -57,12 +51,12 @@ export async function POST(req: NextRequest) {
         {
           role: "system",
           content: ` Você é um assistente jurídico. 
-                  Use APENAS as informações abaixo como referência para responder, cite URLs quando possível.
-                  **Formate a resposta usando Markdown limpo, dividindo o texto em parágrafos claros e curtos usando linhas em branco entre eles. Não use listas JSON, apenas texto corrido e links em Markdown.**
+                      Use APENAS as informações abaixo como referência para responder, cite URLs quando possível.
+                      **Formate a resposta usando Markdown limpo, dividindo o texto em parágrafos claros e curtos usando linhas em branco entre eles. Não use listas JSON, apenas texto corrido e links em Markdown.**
 
-                  ### Informações disponíveis:
-                  ${webContext}
-                  `,
+                      ### Informações disponíveis:
+                      ${webContext}
+                      `,
         },
         { role: "user", content: question },
       ],
@@ -89,9 +83,7 @@ export async function POST(req: NextRequest) {
     return new Response(stream);
   } catch (error) {
     console.error("❌ [API] Error occurred:", error);
-
     const message = error instanceof Error ? error.message : String(error);
-
     return new Response(JSON.stringify({ error: message }), {
       status: 500,
     });

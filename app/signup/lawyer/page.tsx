@@ -18,7 +18,6 @@ import {
   CircularProgress,
   Chip,
   Paper,
-  Link,
   Select,
   OutlinedInput,
   IconButton,
@@ -41,7 +40,6 @@ export default function SignUpFlowLawyer() {
     confirmSignUp,
     signIn,
     currentSession,
-    isLoading,
     resendConfirmationCode,
   } = useAuth();
   const [signupStep, setSignupStep] = useState<"basic" | "professional">(
@@ -356,8 +354,16 @@ export default function SignUpFlowLawyer() {
     try {
       await resendConfirmationCode(email.toLowerCase().trim());
       setSuccess("Novo código enviado!");
-    } catch (err: any) {
-      setError(err.message || "Erro ao reenviar código");
+    } catch (err: unknown) {
+      // 1. Troque 'any' por 'unknown'
+      let errorMessage = "Erro ao reenviar código"; // 2. Defina uma mensagem padrão
+
+      // 3. Verifique se 'err' é realmente uma instância de Error
+      if (err instanceof Error) {
+        errorMessage = err.message; // Se for, use a mensagem do erro com segurança
+      }
+
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

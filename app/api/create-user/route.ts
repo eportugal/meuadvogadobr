@@ -29,7 +29,7 @@ export async function POST(req: NextRequest) {
 
     const TABLE_NAME = "users"; // ✅ Confirme o nome exato
 
-    let role: string = "regular";
+    const role: string = "regular";
 
     // ⚠️ Validar campos obrigatórios
     if (!firstName?.trim() || !lastName?.trim() || !email?.trim()) {
