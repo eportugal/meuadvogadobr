@@ -4,6 +4,10 @@ import { DynamoDBClient, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 // ⚙️ DynamoDB config
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+  },
 });
 
 export async function POST(req: NextRequest) {
@@ -16,7 +20,7 @@ export async function POST(req: NextRequest) {
           success: false,
           error: "Parâmetros obrigatórios faltando (id, status).",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -53,7 +57,7 @@ export async function POST(req: NextRequest) {
         success: false,
         error: error.message || "Erro interno ao atualizar status",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

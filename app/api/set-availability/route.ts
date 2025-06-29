@@ -3,6 +3,10 @@ import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
+  },
 });
 
 export async function POST(req: NextRequest) {
@@ -12,7 +16,7 @@ export async function POST(req: NextRequest) {
     if (!lawyerId || !weeklySchedule || typeof weeklySchedule !== "object") {
       return NextResponse.json(
         { success: false, error: "Campos obrigatórios ausentes ou inválidos." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -31,7 +35,7 @@ export async function POST(req: NextRequest) {
           lawyerId: { S: lawyerId },
           weeklySchedule: { M: scheduleForDynamo },
         },
-      })
+      }),
     );
 
     return NextResponse.json({
@@ -42,7 +46,7 @@ export async function POST(req: NextRequest) {
     console.error("❌ [set-availability] Erro:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
