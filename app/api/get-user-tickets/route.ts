@@ -8,10 +8,6 @@ export const dynamic = "force-dynamic";
 
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-  },
 });
 
 export async function GET(req: NextRequest) {
@@ -28,7 +24,7 @@ export async function GET(req: NextRequest) {
         new GetItemCommand({
           TableName: "tickets",
           Key: { ticketId: { S: ticketId } },
-        }),
+        })
       );
 
       if (!res.Item) {
@@ -46,7 +42,7 @@ export async function GET(req: NextRequest) {
           new GetItemCommand({
             TableName: "users",
             Key: { id: { S: item.lawyerId.S } },
-          }),
+          })
         );
 
         if (lawyerRes.Item) {
@@ -74,7 +70,7 @@ export async function GET(req: NextRequest) {
     if (!userId) {
       return NextResponse.json(
         { success: false, error: "userId é obrigatório na query string." },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -107,7 +103,7 @@ export async function GET(req: NextRequest) {
             new GetItemCommand({
               TableName: "users",
               Key: { id: { S: item.lawyerId.S } },
-            }),
+            })
           );
 
           if (lawyerRes.Item) {
@@ -127,7 +123,7 @@ export async function GET(req: NextRequest) {
           respondedAt: item.respondedAt?.S ?? null,
           lawyerName: lawyerName || null,
         };
-      }),
+      })
     );
 
     return NextResponse.json({
@@ -139,7 +135,7 @@ export async function GET(req: NextRequest) {
     console.error("[get-user-tickets] Erro:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

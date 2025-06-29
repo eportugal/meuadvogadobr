@@ -9,10 +9,6 @@ import { createReminderSchedule } from "../../utils/scheduleReminder";
 
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-  },
 });
 
 export async function POST(req: NextRequest) {
@@ -52,7 +48,7 @@ export async function POST(req: NextRequest) {
     ) {
       return NextResponse.json(
         { success: false, error: "Faltando campos obrigatórios" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -63,26 +59,26 @@ export async function POST(req: NextRequest) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ area }),
-      },
+      }
     );
     const { lawyers } = await lawyerRes.json();
 
     if (!lawyers || lawyers.length === 0) {
       return NextResponse.json(
         { success: false, error: "Nenhum advogado disponível para essa área." },
-        { status: 404 },
+        { status: 404 }
       );
     }
 
     // 🧠 Filtrar advogados com o horário escolhido
     const availableLawyers = lawyers.filter((lawyer: any) =>
-      lawyer.availability?.[day]?.includes(hour),
+      lawyer.availability?.[day]?.includes(hour)
     );
 
     if (availableLawyers.length === 0) {
       return NextResponse.json(
         { success: false, error: "Nenhum advogado disponível nesse horário." },
-        { status: 404 },
+        { status: 404 }
       );
     }
 
@@ -103,7 +99,7 @@ export async function POST(req: NextRequest) {
           date: day,
           time: hour,
         }),
-      },
+      }
     );
 
     const appointmentData = await appointmentRes.json();
@@ -111,7 +107,7 @@ export async function POST(req: NextRequest) {
     if (!appointmentData.success) {
       return NextResponse.json(
         { success: false, error: "Erro ao criar a reunião." },
-        { status: 500 },
+        { status: 500 }
       );
     }
 
@@ -129,7 +125,7 @@ export async function POST(req: NextRequest) {
           ":inc": { N: "1" },
         },
         ReturnValues: "UPDATED_NEW",
-      }),
+      })
     );
 
     const newId = counter.Attributes?.currentValue?.N;
@@ -161,7 +157,7 @@ export async function POST(req: NextRequest) {
       new PutItemCommand({
         TableName: "tickets",
         Item: ticketItem,
-      }),
+      })
     );
 
     // 💳 Decrementa crédito
@@ -169,7 +165,7 @@ export async function POST(req: NextRequest) {
     if (!result.success) {
       return NextResponse.json(
         { success: false, error: result.error || "Erro ao debitar crédito." },
-        { status: 500 },
+        { status: 500 }
       );
     }
 
@@ -186,7 +182,7 @@ export async function POST(req: NextRequest) {
     console.error("❌ [create-ticket] Erro:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

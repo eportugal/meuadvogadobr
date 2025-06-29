@@ -3,10 +3,6 @@ import { DynamoDBClient, UpdateItemCommand } from "@aws-sdk/client-dynamodb";
 
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-  },
 });
 
 export async function POST(req: NextRequest) {
@@ -16,7 +12,7 @@ export async function POST(req: NextRequest) {
     if (!ticketId || !status) {
       return NextResponse.json(
         { success: false, error: "ticketId e status obrigatórios." },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -31,7 +27,7 @@ export async function POST(req: NextRequest) {
         ExpressionAttributeValues: {
           ":status": { S: status },
         },
-      }),
+      })
     );
 
     return NextResponse.json({ success: "Ticket atualizado." });
@@ -39,7 +35,7 @@ export async function POST(req: NextRequest) {
     console.error("[update-ticket-status] Erro:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

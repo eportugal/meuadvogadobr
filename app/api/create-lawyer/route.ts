@@ -9,10 +9,6 @@ import {
 
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-  },
 });
 
 export async function POST(req: NextRequest) {
@@ -30,7 +26,7 @@ export async function POST(req: NextRequest) {
     if (!firstName?.trim() || !lastName?.trim() || !email?.trim()) {
       return NextResponse.json(
         { success: false, error: "Todos os campos são obrigatórios." },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -39,7 +35,7 @@ export async function POST(req: NextRequest) {
     if (!emailRegex.test(cleanEmail)) {
       return NextResponse.json(
         { success: false, error: "Email inválido." },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -60,7 +56,7 @@ export async function POST(req: NextRequest) {
       if (existingUser.Items && existingUser.Items.length > 0) {
         return NextResponse.json(
           { success: false, error: "Usuário já existe com este email." },
-          { status: 409 },
+          { status: 409 }
         );
       }
     } catch (queryError) {
@@ -88,7 +84,7 @@ export async function POST(req: NextRequest) {
     if (!Array.isArray(practiceAreas) || practiceAreas.length === 0) {
       return NextResponse.json(
         { success: false, error: "Selecione ao menos uma área de atuação." },
-        { status: 400 },
+        { status: 400 }
       );
     }
     const createUserCommand = new PutItemCommand({
@@ -130,19 +126,19 @@ export async function POST(req: NextRequest) {
     if (error.name === "ConditionalCheckFailedException") {
       return NextResponse.json(
         { success: false, error: "Usuário já existe." },
-        { status: 409 },
+        { status: 409 }
       );
     }
     if (error.name === "ValidationException") {
       return NextResponse.json(
         { success: false, error: "Dados inválidos." },
-        { status: 400 },
+        { status: 400 }
       );
     }
     if (error.name === "ResourceNotFoundException") {
       return NextResponse.json(
         { success: false, error: "Tabela não encontrada." },
-        { status: 500 },
+        { status: 500 }
       );
     }
 
@@ -153,7 +149,7 @@ export async function POST(req: NextRequest) {
         details:
           process.env.NODE_ENV === "development" ? error.message : undefined,
       },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

@@ -5,10 +5,6 @@ export const dynamic = "force-dynamic";
 
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-  },
 });
 
 export async function GET(req: NextRequest) {
@@ -19,7 +15,7 @@ export async function GET(req: NextRequest) {
     if (!lawyerId) {
       return NextResponse.json(
         { success: false, error: "lawyerId é obrigatório." },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -35,7 +31,7 @@ export async function GET(req: NextRequest) {
     if (!result.Item || !result.Item.weeklySchedule) {
       return NextResponse.json(
         { success: true, weeklySchedule: {} },
-        { status: 200 },
+        { status: 200 }
       );
     }
 
@@ -54,7 +50,7 @@ export async function GET(req: NextRequest) {
     console.error("❌ [get-availability] Erro:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno." },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
