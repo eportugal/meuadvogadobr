@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
     if (!lawyerId || !clientId || !lawyerName || !date || !time) {
       return NextResponse.json(
         { success: false, error: "Faltando campos obrigatórios." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
           ":inc": { N: "1" },
         },
         ReturnValues: "UPDATED_NEW",
-      })
+      }),
     );
 
     const appointmentId = counter.Attributes?.currentValue?.N;
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
       new PutItemCommand({
         TableName: "appointments",
         Item: item,
-      })
+      }),
     );
 
     // 🕒 Criar horário do lembrete (30 minutos antes)
@@ -94,7 +94,7 @@ export async function POST(req: NextRequest) {
             "arn:aws:iam::941377122403:role/service-role/sendAppointmentReminder-role-qnt8jleg",
           Input: JSON.stringify({ appointmentId }),
         },
-      })
+      }),
     );
 
     return NextResponse.json({
@@ -106,7 +106,7 @@ export async function POST(req: NextRequest) {
     console.error("❌ [create-appointment] Erro:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

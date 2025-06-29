@@ -35,7 +35,7 @@ export async function decreaseCredit({
           ":dec": { N: "1" },
           ":now": { S: new Date().toISOString() },
         },
-      })
+      }),
     );
 
     return { success: true };
