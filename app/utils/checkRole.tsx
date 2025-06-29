@@ -5,7 +5,7 @@ import { DynamoDBClient, QueryCommand } from "@aws-sdk/client-dynamodb";
 const client = new DynamoDBClient({ region: process.env.AWS_REGION });
 
 export async function checkRole(
-  requiredRole: string
+  requiredRole: string,
 ): Promise<{ email: string; role: string }> {
   const currentUser = await getCurrentUser();
   const email = currentUser.signInDetails?.loginId;
@@ -20,7 +20,7 @@ export async function checkRole(
         ":email": { S: email },
       },
       Limit: 1,
-    })
+    }),
   );
 
   const user = res.Items?.[0];

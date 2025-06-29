@@ -24,7 +24,8 @@ export async function GET() {
     FlexibleTimeWindow: { Mode: FlexibleTimeWindowMode.OFF },
     Target: {
       Arn: "arn:aws:lambda:us-east-2:941377122403:function:sendAppointmentReminder",
-      RoleArn: "arn:aws:iam::941377122403:role/service-role/sendAppointmentReminder-role-qnt8jleg",
+      RoleArn:
+        "arn:aws:iam::941377122403:role/service-role/sendAppointmentReminder-role-qnt8jleg",
       Input: JSON.stringify({ appointmentId }),
     },
   };

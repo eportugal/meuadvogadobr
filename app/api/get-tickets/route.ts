@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     if (!rawAreas.length) {
       return NextResponse.json(
         { success: false, error: "Nenhuma área de atuação informada." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -88,7 +88,7 @@ export async function GET(req: NextRequest) {
               new GetItemCommand({
                 TableName: "users",
                 Key: { id: { S: userId } },
-              })
+              }),
             );
 
             if (userRes.Item) {
@@ -116,7 +116,7 @@ export async function GET(req: NextRequest) {
           area: item.area?.S ?? null,
           summary: item.summary?.S ?? null,
         };
-      })
+      }),
     );
 
     return NextResponse.json({
@@ -128,7 +128,7 @@ export async function GET(req: NextRequest) {
     console.error("[get-tickets] Erro:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
