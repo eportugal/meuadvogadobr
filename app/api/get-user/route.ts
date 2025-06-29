@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
           ":email": { S: cleanEmail },
         },
         Limit: 1,
-      })
+      }),
     );
 
     if (res.Items && res.Items.length > 0) {
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     console.error("Erro em /api/get-user:", err);
     return NextResponse.json(
       { success: false, error: err.message },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -10,7 +10,7 @@ const openai = new OpenAI({
 
 async function searchDuckDuckGo(query: string): Promise<string> {
   const response = await fetch(
-    `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`
+    `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`,
   );
   const html = await response.text();
   const $ = cheerio.load(html);
@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
     if (!question || !userId) {
       return NextResponse.json(
         { success: false, error: "Parâmetros ausentes: question ou userId." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -94,7 +94,7 @@ ${webContext}
           raw,
           cleaned,
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -108,7 +108,7 @@ ${webContext}
           success: false,
           error: result.error || "Erro ao debitar crédito IA.",
         },
-        { status: 500 }
+        { status: 500 },
       );
     }
 
@@ -124,7 +124,7 @@ ${webContext}
         error: error.message || "Erro interno",
         raw: error?.response?.choices?.[0]?.message?.content || "",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

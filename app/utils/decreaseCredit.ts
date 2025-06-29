@@ -20,8 +20,8 @@ export async function decreaseCredit({
     type === "ia"
       ? "creditsIA"
       : type === "consultoria"
-      ? "creditsConsultoria"
-      : null;
+        ? "creditsConsultoria"
+        : null;
 
   if (!creditField) {
     return { success: false, error: "Tipo de crédito inválido." };
@@ -39,7 +39,7 @@ export async function decreaseCredit({
           ":dec": { N: "1" },
           ":now": { S: new Date().toISOString() },
         },
-      })
+      }),
     );
 
     return { success: true };

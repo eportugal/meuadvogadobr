@@ -147,7 +147,7 @@ export default function AuthFlow() {
         password,
         "regular",
         firstName.trim(),
-        lastName.trim()
+        lastName.trim(),
       );
       if (!signUpRes.success) {
         throw new Error(signUpRes.message || "Erro no Cognito");
@@ -198,7 +198,7 @@ export default function AuthFlow() {
       const cleanEmail = email.toLowerCase().trim();
       const confirmRes = await confirmSignUp(
         cleanEmail,
-        confirmationCode.trim()
+        confirmationCode.trim(),
       );
       if (!confirmRes.success) throw new Error(confirmRes.message);
 
@@ -287,8 +287,8 @@ export default function AuthFlow() {
                   {step === "login"
                     ? "Entrar"
                     : step === "signup"
-                    ? "Criar Conta"
-                    : "Confirmar Código"}
+                      ? "Criar Conta"
+                      : "Confirmar Código"}
                 </Typography>
               </Box>
 
@@ -344,8 +344,8 @@ export default function AuthFlow() {
                     {loginSuccess
                       ? "Logado com sucesso!"
                       : loginLoading
-                      ? "Entrando..."
-                      : "Entrar"}
+                        ? "Entrando..."
+                        : "Entrar"}
                   </Button>
                   <Typography
                     align="center"
@@ -454,8 +454,8 @@ export default function AuthFlow() {
                     {confirmSuccess
                       ? "Confirmado!"
                       : confirmLoading
-                      ? "Confirmando..."
-                      : "Confirmar e Entrar"}
+                        ? "Confirmando..."
+                        : "Confirmar e Entrar"}
                   </Button>
                 </Box>
               )}

@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
           success: false,
           error: "Parâmetros obrigatórios faltando (id, status).",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
         success: false,
         error: error.message || "Erro interno ao atualizar status",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

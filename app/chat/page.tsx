@@ -102,7 +102,7 @@ export default function LandingPage() {
                 times.push({ day, hour });
               }
             });
-          }
+          },
         );
       });
 

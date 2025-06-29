@@ -106,7 +106,7 @@ export default function TicketsManagePage() {
 
       const sorted = (data.tickets || []).sort(
         (a: Ticket, b: Ticket) =>
-          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
       );
 
       setTickets((prev) => (initial ? sorted : [...prev, ...sorted]));
@@ -173,8 +173,8 @@ export default function TicketsManagePage() {
           prev.map((t) =>
             t.ticketId === selectedTicket.ticketId
               ? { ...t, status: newStatus }
-              : t
-          )
+              : t,
+          ),
         );
         setSelectedTicket({ ...selectedTicket, status: newStatus });
       } else {
@@ -295,8 +295,8 @@ export default function TicketsManagePage() {
                             ticket.status === "Novo"
                               ? "primary.main"
                               : ticket.status === "Em Aberto"
-                              ? "warning.main"
-                              : "success.main", // Concluído
+                                ? "warning.main"
+                                : "success.main", // Concluído
                           color: "white",
                           fontSize: "8px",
                           letterSpacing: "1px",
