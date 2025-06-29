@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
           success: false,
           error: "Ticket ID, resposta e ID do advogado são obrigatórios.",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
           ":respondedAt": { S: new Date().toISOString() },
           ":lawyerId": { S: lawyerId },
         },
-      })
+      }),
     );
 
     return NextResponse.json({
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     console.error("[respond-ticket] Erro:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

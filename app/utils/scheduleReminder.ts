@@ -6,7 +6,10 @@ import {
 
 const scheduler = new SchedulerClient({ region: process.env.AWS_REGION });
 
-export async function createReminderSchedule(appointmentId: string, dateTimeISO: string) {
+export async function createReminderSchedule(
+  appointmentId: string,
+  dateTimeISO: string,
+) {
   const scheduleName = `reminder-${appointmentId}`;
 
   // ✅ Remove os milissegundos para evitar erro de ScheduleExpression inválida
@@ -19,7 +22,8 @@ export async function createReminderSchedule(appointmentId: string, dateTimeISO:
     FlexibleTimeWindow: { Mode: FlexibleTimeWindowMode.OFF },
     Target: {
       Arn: "arn:aws:lambda:us-east-2:941377122403:function:sendAppointmentReminder",
-      RoleArn: "arn:aws:iam::941377122403:role/service-role/sendAppointmentReminder-role-qnt8jleg",
+      RoleArn:
+        "arn:aws:iam::941377122403:role/service-role/sendAppointmentReminder-role-qnt8jleg",
       Input: JSON.stringify({ appointmentId }),
     },
   };

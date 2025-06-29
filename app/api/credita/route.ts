@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     if (!userId || !type) {
       return NextResponse.json(
         { success: false, error: "Parâmetros obrigatórios ausentes." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -24,13 +24,13 @@ export async function POST(req: NextRequest) {
       type === "ia"
         ? "creditsIA"
         : type === "consultoria"
-        ? "creditsConsultoria"
-        : null;
+          ? "creditsConsultoria"
+          : null;
 
     if (!creditField) {
       return NextResponse.json(
         { success: false, error: "Tipo de crédito inválido." },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
           ":dec": { N: "1" },
           ":min": { N: "1" },
         },
-      })
+      }),
     );
 
     return NextResponse.json({ success: true });
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
     console.error("❌ Erro ao diminuir crédito:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno." },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

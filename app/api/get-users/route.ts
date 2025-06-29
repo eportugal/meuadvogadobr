@@ -24,7 +24,7 @@ export async function GET(req: NextRequest) {
     const res = await client.send(
       new ScanCommand({
         TableName: "users",
-      })
+      }),
     );
 
     const users = (res.Items || []).map((user) => ({
@@ -45,7 +45,7 @@ export async function GET(req: NextRequest) {
 
     if (areaFilter) {
       filteredUsers = filteredUsers.filter((u) =>
-        u.practiceAreas.some((area) => normalize(area ?? "") === areaFilter)
+        u.practiceAreas.some((area) => normalize(area ?? "") === areaFilter),
       );
     }
 
@@ -57,7 +57,7 @@ export async function GET(req: NextRequest) {
     console.error("❌ Erro em /api/get-users:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -183,8 +183,8 @@ export default function DashboardPage() {
                                 ticket.status === "Novo"
                                   ? "primary.main"
                                   : ticket.status === "Em Aberto"
-                                  ? "warning.main"
-                                  : "success.main", // Concluído
+                                    ? "warning.main"
+                                    : "success.main", // Concluído
                               color: "white",
                               fontSize: "8px",
                               letterSpacing: "1px",
