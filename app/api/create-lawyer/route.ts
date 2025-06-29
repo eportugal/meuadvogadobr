@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
       practiceAreas,
     } = await req.json();
 
-    let role: string = "lawyer";
+    const role: string = "lawyer";
 
     if (!firstName?.trim() || !lastName?.trim() || !email?.trim()) {
       return NextResponse.json(

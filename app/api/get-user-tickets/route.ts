@@ -4,6 +4,7 @@ import {
   QueryCommand,
   GetItemCommand,
 } from "@aws-sdk/client-dynamodb";
+export const dynamic = "force-dynamic";
 
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION,

@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { DynamoDBClient, QueryCommand } from "@aws-sdk/client-dynamodb";
 
 const client = new DynamoDBClient({ region: process.env.AWS_REGION });
+export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
   try {
