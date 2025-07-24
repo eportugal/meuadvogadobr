@@ -199,7 +199,7 @@ export default function AuthFlow() {
       const cleanEmail = email.toLowerCase().trim();
       const confirmRes = await confirmSignUp(
         cleanEmail,
-        confirmationCode.trim()
+        confirmationCode.trim(),
       );
       if (!confirmRes.success) throw new Error(confirmRes.message);
 
