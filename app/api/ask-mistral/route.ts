@@ -18,7 +18,7 @@ async function searchDuckDuckGo(query: string): Promise<string> {
   // ... seu código de busca continua o mesmo
   console.log("🔍 [DuckDuckGo] Raw search with HTML scrape:", query);
   const response = await fetch(
-    `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`,
+    `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`
   );
   const html = await response.text();
   const $ = cheerio.load(html);
@@ -35,7 +35,6 @@ async function searchDuckDuckGo(query: string): Promise<string> {
   return results.join("\n\n");
 }
 
-// O resto da sua função POST continua exatamente o mesmo
 export async function POST(req: NextRequest) {
   console.log("🌐 [API] POST /api/ask-mistral called");
   const { question } = await req.json();
