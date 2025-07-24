@@ -38,7 +38,7 @@ export interface AuthContextType {
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined,
+  undefined
 );
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -131,13 +131,19 @@ function useProvideAuth(): AuthContextType {
     }
   };
 
-  const signUp = async (
-    username: string,
-    password: string,
-    profileType: "regular" | "advogado",
-    firstname?: string,
-    lastname?: string,
-  ) => {
+  const signUp = async ({
+    username,
+    password,
+    profileType,
+    firstname,
+    lastname,
+  }: {
+    username: string;
+    password: string;
+    profileType: "regular" | "advogado";
+    firstname: string;
+    lastname: string;
+  }) => {
     setIsLoading(true);
     try {
       await amplifySignUp({
@@ -202,7 +208,7 @@ function useProvideAuth(): AuthContextType {
   const forgotPasswordSubmit = async (
     username: string,
     code: string,
-    newPassword: string,
+    newPassword: string
   ) => {
     setIsLoading(true);
     try {

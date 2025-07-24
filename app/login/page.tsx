@@ -142,13 +142,14 @@ export default function AuthFlow() {
         throw new Error(dbData.error || "Erro ao criar usuário no banco");
       }
       setUserId(dbData.id);
-      const signUpRes = await signUp(
-        cleanEmail,
+      const signUpRes = await signUp({
+        username: cleanEmail,
         password,
-        "regular",
-        firstName.trim(),
-        lastName.trim(),
-      );
+        profileType: "regular",
+        firstname: firstName.trim(),
+        lastname: lastName.trim(),
+      });
+
       if (!signUpRes.success) {
         throw new Error(signUpRes.message || "Erro no Cognito");
       }
@@ -198,7 +199,7 @@ export default function AuthFlow() {
       const cleanEmail = email.toLowerCase().trim();
       const confirmRes = await confirmSignUp(
         cleanEmail,
-        confirmationCode.trim(),
+        confirmationCode.trim()
       );
       if (!confirmRes.success) throw new Error(confirmRes.message);
 
