@@ -53,6 +53,7 @@ export default function AuthFlow() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   useEffect(() => {
     if (showModal) {
@@ -65,16 +66,14 @@ export default function AuthFlow() {
   }, [showModal]);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      if (profile === "advogado") {
-        router.replace("/tickets/manage");
-      } else {
-        router.replace("/dashboard");
-      }
+    if (isAuthenticated && profile && !isRedirecting) {
+      setIsRedirecting(true);
+      const targetPath = profile === "advogado" ? "/tickets/manage" : "/dashboard";
+      router.replace(targetPath);
     }
-  }, [isAuthenticated, profile]);
+  }, [isAuthenticated, profile, router, isRedirecting]);
 
-  if (isAuthenticated) return null;
+  if (isAuthenticated || isRedirecting) return null;
 
   const resetMessages = () => {
     setError("");
@@ -96,17 +95,7 @@ export default function AuthFlow() {
 
       if (!signInRes.success) throw new Error(signInRes.message);
 
-      const profile = signInRes.profile; // "regular" ou "advogado"
-
       setLoginSuccess(true);
-
-      setTimeout(() => {
-        if (profile === "advogado") {
-          router.push("/tickets/manage");
-        } else {
-          router.push("/dashboard");
-        }
-      }, 1000);
     } catch (err: any) {
       setError(err.message || "Erro inesperado");
     } finally {
@@ -183,7 +172,7 @@ export default function AuthFlow() {
         });
       }
 
-      router.push("/");
+      router.push("/dashboard");
     } catch (err: any) {
       setError(err.message || "Erro inesperado");
     } finally {

@@ -1,8 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { useAuth } from "../hooks/useAuth";
 
 export default function Footer() {
+  const { isAuthenticated, profile } = useAuth();
+
+  if (isAuthenticated && !profile) return null;
+
+  if (isAuthenticated) return null;
+
   return (
     <footer className="bg-gray-900 text-gray-300 py-12">
       <div className="max-w-7xl mx-auto px-4">

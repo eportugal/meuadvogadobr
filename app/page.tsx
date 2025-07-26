@@ -24,18 +24,12 @@ export default function LandingPage() {
   const [showCreditsModal, setShowCreditsModal] = useState(false);
   const [modalReason, setModalReason] = useState<"ia" | "ticket" | null>(null);
 
+  if (isAuthenticated) {
+    return null;
+  }
+
   const creditsIA = Number(dbUser?.creditsIA ?? 0);
   const creditsConsultoria = Number(dbUser?.creditsConsultoria ?? 0);
-
-  useEffect(() => {
-    if (!isLoading && isAuthenticated && dbUser) {
-      if (dbUser.role === "regular") {
-        router.replace("/");
-      } else if (dbUser.role === "advogado") {
-        router.replace("/tickets/manage");
-      }
-    }
-  }, [isAuthenticated, dbUser, isLoading, router]);
 
   const handleCTA = () => {
     router.push("/signup/regular");

@@ -16,6 +16,8 @@ export default function NavBar() {
     router.push("/");
   };
 
+  if (isAuthenticated && !profile) return null;
+
   if (isAuthenticated && profile === "regular") return null;
 
   return (

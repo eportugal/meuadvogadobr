@@ -35,6 +35,14 @@ export default function ClientLayout({
     );
   }
 
+  if (isAuthenticated && !profile) {
+    return (
+      <Box className="flex items-center justify-center min-h-screen bg-white">
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
