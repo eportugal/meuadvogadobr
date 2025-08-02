@@ -38,7 +38,7 @@ export interface AuthContextType {
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined,
+  undefined
 );
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -208,7 +208,7 @@ function useProvideAuth(): AuthContextType {
   const forgotPasswordSubmit = async (
     username: string,
     code: string,
-    newPassword: string,
+    newPassword: string
   ) => {
     setIsLoading(true);
     try {

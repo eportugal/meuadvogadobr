@@ -43,7 +43,7 @@ export default function SignUpFlowLawyer() {
     resendConfirmationCode,
   } = useAuth();
   const [signupStep, setSignupStep] = useState<"basic" | "professional">(
-    "basic",
+    "basic"
   );
   const [step, setStep] = useState<"signup" | "confirm">("signup");
   const [email, setEmail] = useState("");
@@ -231,7 +231,7 @@ export default function SignUpFlowLawyer() {
         password,
         "advogado",
         firstName.trim(),
-        lastName.trim(),
+        lastName.trim()
       );
       if (!res.success) throw new Error(res.message || "Erro no Cognito");
 
@@ -253,7 +253,7 @@ export default function SignUpFlowLawyer() {
       const cleanEmail = email.toLowerCase().trim();
       const confirmRes = await confirmSignUp(
         cleanEmail,
-        confirmationCode.trim().padEnd(6, " "),
+        confirmationCode.trim().padEnd(6, " ")
       );
       if (!confirmRes.success) throw new Error(confirmRes.message);
 
@@ -342,7 +342,7 @@ export default function SignUpFlowLawyer() {
   };
 
   const handlePracticeAreasChange = (
-    event: SelectChangeEvent<typeof practiceAreas>,
+    event: SelectChangeEvent<typeof practiceAreas>
   ) => {
     const { value } = event.target;
     setPracticeAreas(typeof value === "string" ? value.split(",") : value);
@@ -569,7 +569,7 @@ export default function SignUpFlowLawyer() {
                                 label={value}
                                 onDelete={() =>
                                   setPracticeAreas((prev) =>
-                                    prev.filter((item) => item !== value),
+                                    prev.filter((item) => item !== value)
                                   )
                                 }
                                 onMouseDown={(e) => e.stopPropagation()}
@@ -664,7 +664,7 @@ export default function SignUpFlowLawyer() {
                                           setAvailability((prev) => ({
                                             ...prev,
                                             [day]: prev[day].filter(
-                                              (h) => h !== hour,
+                                              (h) => h !== hour
                                             ),
                                           }))
                                         }

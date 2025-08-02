@@ -68,8 +68,7 @@ export default function AuthFlow() {
   useEffect(() => {
     if (isAuthenticated && profile && !isRedirecting) {
       setIsRedirecting(true);
-      const targetPath =
-        profile === "advogado" ? "/tickets/manage" : "/dashboard";
+      const targetPath = profile === "advogado" ? "/tickets/manage" : "/dashboard";
       router.replace(targetPath);
     }
   }, [isAuthenticated, profile, router, isRedirecting]);
@@ -189,7 +188,7 @@ export default function AuthFlow() {
       const cleanEmail = email.toLowerCase().trim();
       const confirmRes = await confirmSignUp(
         cleanEmail,
-        confirmationCode.trim(),
+        confirmationCode.trim()
       );
       if (!confirmRes.success) throw new Error(confirmRes.message);
 
