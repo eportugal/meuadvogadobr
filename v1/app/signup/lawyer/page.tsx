@@ -226,13 +226,13 @@ export default function SignUpFlowLawyer() {
 
       setUserId(dbData.id);
 
-      const res = await signUp(
-        cleanEmail,
+      const res = await signUp({
+        username: cleanEmail,
         password,
-        "advogado",
-        firstName.trim(),
-        lastName.trim()
-      );
+        profileType: "advogado",
+        firstname: firstName.trim(),
+        lastname: lastName.trim(),
+      });
       if (!res.success) throw new Error(res.message || "Erro no Cognito");
 
       setSuccess("Código de confirmação enviado para seu email!");

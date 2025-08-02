@@ -6,6 +6,7 @@ import {
 } from "@aws-sdk/client-dynamodb";
 import { decreaseCredit } from "../../utils/decreaseCredit";
 import { createReminderSchedule } from "../../utils/scheduleReminder";
+import { getNextAppointmentDate } from "../../utils/getNextAppointmentDate"; // ✅
 
 const client = new DynamoDBClient({
   region: process.env.AWS_REGION,
@@ -52,7 +53,7 @@ export async function POST(req: NextRequest) {
     ) {
       return NextResponse.json(
         { success: false, error: "Faltando campos obrigatórios" },
-        { status: 400 },
+        { status: 400 }
       );
     }
 
@@ -63,32 +64,35 @@ export async function POST(req: NextRequest) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ area }),
-      },
+      }
     );
     const { lawyers } = await lawyerRes.json();
 
     if (!lawyers || lawyers.length === 0) {
       return NextResponse.json(
         { success: false, error: "Nenhum advogado disponível para essa área." },
-        { status: 404 },
+        { status: 404 }
       );
     }
 
     // 🧠 Filtrar advogados com o horário escolhido
     const availableLawyers = lawyers.filter((lawyer: any) =>
-      lawyer.availability?.[day]?.includes(hour),
+      lawyer.availability?.[day]?.includes(hour)
     );
 
     if (availableLawyers.length === 0) {
       return NextResponse.json(
         { success: false, error: "Nenhum advogado disponível nesse horário." },
-        { status: 404 },
+        { status: 404 }
       );
     }
 
     // 🎯 Escolher advogado aleatoriamente
     const randomLawyer =
       availableLawyers[Math.floor(Math.random() * availableLawyers.length)];
+
+    // ✅ Gerar data e hora completas para o agendamento
+    const appointmentDate = getNextAppointmentDate(day, hour);
 
     // 📆 Criar appointment com o advogado e cliente
     const appointmentRes = await fetch(
@@ -100,18 +104,30 @@ export async function POST(req: NextRequest) {
           lawyerId: randomLawyer.id,
           clientId: userId,
           lawyerName: randomLawyer.name,
-          date: day,
-          time: hour,
+          dateTime: appointmentDate.toISOString(), // ✅ agora data válida
         }),
-      },
+      }
     );
+
+    if (!appointmentRes.ok) {
+      const errorBody = await appointmentRes.text();
+      console.error("❌ Erro HTTP de /create-appointment:", errorBody);
+      return NextResponse.json(
+        { success: false, error: "Erro ao criar a reunião (HTTP error)" },
+        { status: 500 }
+      );
+    }
 
     const appointmentData = await appointmentRes.json();
 
     if (!appointmentData.success) {
+      console.error("❌ appointmentData com success: false", appointmentData);
       return NextResponse.json(
-        { success: false, error: "Erro ao criar a reunião." },
-        { status: 500 },
+        {
+          success: false,
+          error: appointmentData.error || "Erro ao criar a reunião.",
+        },
+        { status: 500 }
       );
     }
 
@@ -129,14 +145,14 @@ export async function POST(req: NextRequest) {
           ":inc": { N: "1" },
         },
         ReturnValues: "UPDATED_NEW",
-      }),
+      })
     );
 
     const newId = counter.Attributes?.currentValue?.N;
     if (!newId) throw new Error("Falha ao gerar ID do ticket");
 
     const ticketItem: Record<string, any> = {
-      ticketId: { S: newId },
+      id: { S: newId },
       userId: { S: userId },
       lawyerId: { S: randomLawyer.id },
       text: { S: text.trim() },
@@ -161,7 +177,7 @@ export async function POST(req: NextRequest) {
       new PutItemCommand({
         TableName: "tickets",
         Item: ticketItem,
-      }),
+      })
     );
 
     // 💳 Decrementa crédito
@@ -169,7 +185,7 @@ export async function POST(req: NextRequest) {
     if (!result.success) {
       return NextResponse.json(
         { success: false, error: result.error || "Erro ao debitar crédito." },
-        { status: 500 },
+        { status: 500 }
       );
     }
 
@@ -186,7 +202,7 @@ export async function POST(req: NextRequest) {
     console.error("❌ [create-ticket] Erro:", err);
     return NextResponse.json(
       { success: false, error: err.message || "Erro interno" },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }
