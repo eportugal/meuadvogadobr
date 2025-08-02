@@ -77,9 +77,12 @@ export function LineChart({
       return;
     }
 
-    const timeoutId = setTimeout(() => {
-      setShowPulse(true);
-    }, (startAnimationDelay || 0) * 1000);
+    const timeoutId = setTimeout(
+      () => {
+        setShowPulse(true);
+      },
+      (startAnimationDelay || 0) * 1000,
+    );
 
     return () => clearTimeout(timeoutId);
   }, [shouldAnimate, startAnimationDelay]);
@@ -214,9 +217,12 @@ export function NumberFlowCounter({
       return;
     }
 
-    const timeoutId = setTimeout(() => {
-      setShowCounter(true);
-    }, (startAnimationDelay || 0) * 1000);
+    const timeoutId = setTimeout(
+      () => {
+        setShowCounter(true);
+      },
+      (startAnimationDelay || 0) * 1000,
+    );
 
     return () => clearTimeout(timeoutId);
   }, [shouldAnimate, startAnimationDelay]);

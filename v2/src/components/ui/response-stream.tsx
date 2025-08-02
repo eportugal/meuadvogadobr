@@ -41,7 +41,7 @@ function useTextStream({
   const [displayedText, setDisplayedText] = useState("");
   const [isComplete, setIsComplete] = useState(false);
   const [segments, setSegments] = useState<{ text: string; index: number }[]>(
-    []
+    [],
   );
 
   const speedRef = useRef(speed);
@@ -121,7 +121,7 @@ function useTextStream({
             (segment, index) => ({
               text: segment.segment,
               index,
-            })
+            }),
           );
           setSegments(newSegments);
         } catch (error) {
@@ -137,7 +137,7 @@ function useTextStream({
         }
       }
     },
-    [onError]
+    [onError],
   );
 
   const markComplete = useCallback(() => {
@@ -181,7 +181,7 @@ function useTextStream({
         const chunkSize = getChunkSize();
         const endIndex = Math.min(
           currentIndexRef.current + chunkSize,
-          text.length
+          text.length,
         );
         const newDisplayedText = text.slice(0, endIndex);
 
@@ -201,7 +201,7 @@ function useTextStream({
 
       animationRef.current = requestAnimationFrame(streamContent);
     },
-    [getProcessingDelay, getChunkSize, updateSegments, markComplete]
+    [getProcessingDelay, getChunkSize, updateSegments, markComplete],
   );
 
   const processAsyncIterable = useCallback(
@@ -227,7 +227,7 @@ function useTextStream({
         onError?.(error);
       }
     },
-    [updateSegments, markComplete, onError]
+    [updateSegments, markComplete, onError],
   );
 
   const startStreaming = useCallback(() => {
@@ -367,7 +367,7 @@ function ResponseStream({
                     key={`${segment.text}-${idx}`}
                     className={cn(
                       "fade-segment",
-                      isWhitespace && "fade-segment-space"
+                      isWhitespace && "fade-segment-space",
                     )}
                     style={{
                       animationDelay: `${idx * getSegmentDelay()}ms`,

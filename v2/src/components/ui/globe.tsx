@@ -84,7 +84,7 @@ export function Globe({
       diffuse: isDarkMode ? 0.5 : 0.4,
       mapBrightness: isDarkMode ? 1.4 : 1.2,
     }),
-    [config, isDarkMode]
+    [config, isDarkMode],
   );
 
   const updatePointerInteraction = (value: number | null) => {
@@ -135,12 +135,12 @@ export function Globe({
     <div
       className={cn(
         "absolute inset-0 mx-auto aspect-[1/1] w-full max-w-[600px]",
-        className
+        className,
       )}
     >
       <canvas
         className={cn(
-          "size-full opacity-0 transition-opacity duration-500 [contain:layout_paint_size]"
+          "size-full opacity-0 transition-opacity duration-500 [contain:layout_paint_size]",
         )}
         ref={canvasRef}
         onPointerDown={(e) => {
