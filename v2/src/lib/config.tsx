@@ -18,7 +18,7 @@ export const Highlight = ({
     <span
       className={cn(
         "p-1 py-0.5 font-medium dark:font-semibold text-secondary",
-        className,
+        className
       )}
     >
       {children}
@@ -48,10 +48,10 @@ export const siteConfig = {
   },
   nav: {
     links: [
-      { id: 1, name: "Home", href: "#hero" },
-      { id: 2, name: "How it Works", href: "#bento" },
-      { id: 3, name: "Features", href: "#features" },
-      { id: 4, name: "Pricing", href: "#pricing" },
+      { id: 1, name: "Inicio", href: "#hero" },
+      { id: 2, name: "Sobre nós", href: "#bento" },
+      { id: 3, name: "Como funciona", href: "#features" },
+      { id: 4, name: "Planos", href: "#pricing" },
     ],
   },
   hero: {
@@ -69,17 +69,17 @@ export const siteConfig = {
         <path d="M2.37845 10.5993L2.57045 10.4893L6.88445 12.9533C7.22435 13.1474 7.60901 13.2496 8.00045 13.2496C8.39189 13.2496 8.77656 13.1474 9.11645 12.9533L13.4305 10.4883L13.6225 10.5983C13.7374 10.6638 13.833 10.7586 13.8994 10.8731C13.9659 10.9875 14.0009 11.1175 14.0009 11.2498C14.0009 11.3821 13.9659 11.5121 13.8994 11.6265C13.833 11.7409 13.7374 11.8357 13.6225 11.9013L8.37245 14.9013C8.25915 14.966 8.13093 15 8.00045 15C7.86997 15 7.74175 14.966 7.62845 14.9013L2.37845 11.9013C2.2635 11.8357 2.16795 11.7409 2.10148 11.6265C2.03501 11.5121 2 11.3821 2 11.2498C2 11.1175 2.03501 10.9875 2.10148 10.8731C2.16795 10.7586 2.2635 10.6638 2.37845 10.5983V10.5993Z" />
       </svg>
     ),
-    badge: "Introducing custom automations",
-    title: "Meet your AI Agent Streamline your workflow",
+    badge: "Justiça acessível começa aqui",
+    title: "Descreva seu problema. A gente conecta você ao advogado certo.",
     description:
-      "AI assistant designed to streamline your digital workflows and handle mundane tasks, so you can focus on what truly matters",
+      "Uma plataforma que usa IA para interpretar sua situação, oferecer orientação inicial e conectar você ao advogado certo — tudo de forma simples, rápida e segura.",
     cta: {
       primary: {
-        text: "Try for Free",
+        text: "Experimentar   agora",
         href: "#",
       },
       secondary: {
-        text: "Log in",
+        text: "Entrar",
         href: "#",
       },
     },
@@ -292,56 +292,56 @@ export const siteConfig = {
     items: [
       {
         id: 1,
-        title: "Ask Your AI Agent Directly",
+        title: "Fale com nossa IA e descreva seu problema",
         content:
-          "Speak or type your command—let SkyAgent capture your intent. Your request instantly sets the process in motion.",
+          "Use linguagem simples — nossa IA entende e interpreta sua situação em segundos.",
         image:
           "https://images.unsplash.com/photo-1720371300677-ba4838fa0678?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       },
       {
         id: 2,
-        title: "Let SkyAgent Process It",
+        title: "A IA analisa e identifica seu caso",
         content:
-          "We prioritize the needs and preferences of our users in our design process.",
+          "Com base no seu relato, ela classifica a área do Direito e prepara um resumo técnico.",
         image:
           "https://images.unsplash.com/photo-1686170287433-c95faf6d3608?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8fA%3D%3D",
       },
       {
         id: 3,
-        title: "Receive Instant, Actionable Results",
+        title: "Conexão com o melhor advogado",
         content:
-          "Our features seamlessly integrate with your existing systems for a smooth experience.",
+          "Veja horários disponíveis e agende uma videochamada com quem pode realmente ajudar.",
         image:
           "https://images.unsplash.com/photo-1720378042271-60aff1e1c538?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D",
       },
       {
         id: 4,
-        title: "Continuous Improvement",
+        title: "Foco em próximos passos para o usuário",
         content:
-          "We are constantly updating and improving our features to provide the best experience.",
+          "A plataforma orienta você com os próximos passos e documentos que podem ser úteis.",
         image:
           "https://images.unsplash.com/photo-1666882990322-e7f3b8df4f75?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D",
       },
     ],
   },
   bentoSection: {
-    title: "Empower Your Workflow with AI",
+    title: "Mudar esse texto",
     description:
-      "Ask your AI Agent for real-time collaboration, seamless integrations, and actionable insights to streamline your operations.",
+      "Nossa inteligência artificial entende sua situação, identifica a área do Direito e conecta você ao especialista ideal — com clareza, agilidade e segurança.",
     items: [
       {
         id: 1,
         content: <FirstBentoAnimation />,
-        title: "Real-time AI Collaboration",
+        title: "Triagem Jurídica Inteligente",
         description:
-          "Experience real-time assistance. Ask your AI Agent to coordinate tasks, answer questions, and maintain team alignment.",
+          "Descreva seu problema em linguagem simples. Nossa IA analisa, pesquisa casos semelhantes e te dá um direcionamento inicial.",
       },
       {
         id: 2,
         content: <SecondBentoAnimation />,
-        title: "Seamless Integrations",
+        title: "Fontes consultadas automaticamentes",
         description:
-          "Unite your favorite tools for effortless connectivity. Boost productivity through interconnected workflows.",
+          "JusBrasil, TSE, CNJ, tribunais estaduais, legislação federal e outras bases públicas confiáveis.",
       },
       {
         id: 3,
@@ -353,16 +353,16 @@ export const siteConfig = {
             ]}
           />
         ),
-        title: "Instant Insight Reporting",
+        title: "Casos triados automaticamente pela IA",
         description:
-          "Transform raw data into clear insights in seconds. Empower smarter decisions with real-time, always-learning intelligence.",
+          "A cada segundo, mais pessoas usam nossa IA para entender seus direitos e tomar decisões jurídicas com mais segurança.",
       },
       {
         id: 4,
         content: <FourthBentoAnimation once={false} />,
-        title: "Smart Automation",
+        title: "Atendimento mais produtivo",
         description:
-          "Set it, forget it. Your AI Agent tackles repetitive tasks so you can focus on strategy, innovation, and growth.",
+          "Advogados recebem clientes já preparados, economizando tempo e aumentando conversões.",
       },
     ],
   },
@@ -389,9 +389,9 @@ export const siteConfig = {
     },
   ],
   growthSection: {
-    title: "Built for Secure Growth",
+    title: "Segurança jurídica com tecnologia de ponta",
     description:
-      "Where advanced security meets seamless scalability—designed to protect your data and empower your growth.",
+      "Protegemos seus dados com os mais altos padrões de segurança — para que você use a plataforma com tranquilidade e confiança.",
     items: [
       {
         id: 1,
@@ -671,9 +671,9 @@ export const siteConfig = {
           </div>
         ),
 
-        title: "Advanced Task Security",
+        title: "Segurança de dados",
         description:
-          "Safeguard your tasks with state-of-art encryption and secure access to your workflow data.",
+          "Privacidade garantida. Todas as informações trocadas na plataformas seguem às normas da LGPD e o Código de Ética da OAB.",
       },
       {
         id: 2,
@@ -683,18 +683,18 @@ export const siteConfig = {
           </div>
         ),
 
-        title: "Scalable for Teams",
+        title: "Pronto para crescer com você",
         description:
-          "Grow with your team. Track tasks across multiple workspaces and all team members.",
+          "Nossa estrutura suporta milhares de atendimentos simultâneos, com estabilidade e agilidade em qualquer lugar do mundo.",
       },
     ],
   },
   quoteSection: {
     quote:
-      "SkyAgent has transformed our daily operations. Tasks that once consumed hours now complete in moments, freeing our team to focus on creativity and strategic growth.",
+      "Construímos o meujurídico.net com um propósito claro: tornar o acesso à justiça algo simples, rápido e acessível. Ao integrar IA com o conhecimento jurídico, conseguimos transformar o jeito como as pessoas lidam com seus problemas legais.",
     author: {
-      name: "Alex Johnson",
-      role: "CTO, Innovatech",
+      name: "Emanoel Portugal",
+      role: "CTO e co-fundador da Meu Juridico.",
       image: "https://randomuser.me/api/portraits/men/91.jpg",
     },
   },
