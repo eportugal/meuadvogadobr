@@ -13,7 +13,7 @@ export function FAQSection() {
   return (
     <section
       id="faq"
-      className="flex flex-col items-center justify-center gap-10 pb-10 w-full relative"
+      className="flex flex-col items-center justify-center gap-10 pb-10 w-full relative px-4 md:px-6 lg:px-10"
     >
       <SectionHeader>
         <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance">
@@ -24,7 +24,7 @@ export function FAQSection() {
         </p>
       </SectionHeader>
 
-      <div className="max-w-3xl w-full mx-auto px-10">
+      <div className="max-w-3xl w-full mx-auto px-2 md:px-4">
         <Accordion
           type="single"
           collapsible
