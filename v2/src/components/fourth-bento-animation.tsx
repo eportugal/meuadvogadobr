@@ -16,15 +16,15 @@ interface BoxConfig {
 
 const boxConfigs: BoxConfig[] = [
   {
-    title: "Novo caso recebido",
+    title: "Bento grid",
     className: "bg-secondary text-white",
   },
   {
-    title: "Resumo técnico gerado",
+    title: "Landing Page",
     className: "bg-secondary/40 text-white",
   },
   {
-    title: "Consultoria realizada",
+    title: "Add Task",
     className:
       "bg-secondary/20 border border-secondary border-dashed text-secondary",
   },
@@ -86,7 +86,7 @@ export function FourthBentoAnimation({
           { length: numberOfItems },
           (_, index) => {
             return ((itemWidth + gap) * index) / 2;
-          }
+          },
         );
         setTranslateXValues(newTranslateXValues);
       }
@@ -177,11 +177,11 @@ export function FourthBentoAnimation({
 
       {/* Days of the week */}
       <div className="absolute top-4 left-0 right-0 flex justify-between max-w-md mx-auto px-8 text-sm text-gray-500">
-        <span>Seg</span>
-        <span>Ter</span>
-        <span>Qua</span>
-        <span>Qui</span>
-        <span>Sex</span>
+        <span>Tue</span>
+        <span>Wed</span>
+        <span>Thu</span>
+        <span>Fri</span>
+        <span>Sat</span>
       </div>
 
       <motion.div
