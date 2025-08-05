@@ -1,0 +1,23 @@
+{
+  "version": "1",
+  "auth": {
+    "user_pool_id": "us-east-2_d7wzzKyzo",
+    "aws_region": "us-east-2",
+    "user_pool_client_id": "532krjpl9v67jgo31dpb7nkv9v",
+    "identity_pool_id": "",
+    "mfa_methods": [],
+    "standard_required_attributes": ["email"],
+    "username_attributes": ["email"],
+    "user_verification_types": ["email"],
+    "mfa_configuration": "NONE",
+    "password_policy": {
+      "min_length": 8,
+      "require_lowercase": true,
+      "require_numbers": true,
+      "require_symbols": false,
+      "require_uppercase": true
+    },
+    "unauthenticated_identities_enabled": false,
+    "oauth": {}
+  }
+}

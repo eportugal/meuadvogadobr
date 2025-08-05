@@ -8,7 +8,7 @@ export function FeatureSection() {
   return (
     <section
       id="features"
-      className="flex flex-col items-center justify-center gap-5 w-full relative"
+      className="flex flex-col items-center justify-center gap-5 w-full relative px-4 md:px-6 lg:px-10"
     >
       <SectionHeader>
         <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance">
@@ -18,7 +18,7 @@ export function FeatureSection() {
           {description}
         </p>
       </SectionHeader>
-      <div className="w-full h-full lg:h-[450px] flex items-center justify-center">
+      <div className="w-full max-w-7xl mx-auto h-full lg:h-[450px] flex items-center justify-center">
         <FeatureComponent
           collapseDelay={5000}
           linePosition="bottom"

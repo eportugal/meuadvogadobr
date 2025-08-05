@@ -11,7 +11,7 @@ import { AnimatePresence, motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 
 export function ReasoningBasic() {
-  const reasoningText = `Based on your calendar patterns and preferences, I recommend scheduling the team meeting for Tuesday at 2pm. This time slot has historically had the highest attendance rate, and it avoids conflicts with other recurring meetings.`;
+  const reasoningText = `Com base na sua descrição, seu caso pode estar relacionado ao Direito do Consumidor. Você tem o direito de contestar cobranças indevidas e pode solicitar a exclusão do seu nome de cadastros de inadimplência, se aplicável.`;
 
   return (
     <Reasoning>
@@ -70,8 +70,8 @@ export function FirstBentoAnimation() {
             }}
           >
             <p className="text-sm">
-              Hey, I need help scheduling a team meeting that works well for
-              everyone. Any suggestions for finding an optimal time slot?
+              Recebi uma notificação de cobrança indevida de uma empresa que
+              nunca usei. O que eu posso fazer?
             </p>
           </motion.div>
           <div className="flex items-center bg-background rounded-full w-fit border border-border flex-shrink-0">

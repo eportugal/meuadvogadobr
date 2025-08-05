@@ -18,7 +18,7 @@ export const Highlight = ({
     <span
       className={cn(
         "p-1 py-0.5 font-medium dark:font-semibold text-secondary",
-        className,
+        className
       )}
     >
       {children}
@@ -48,39 +48,44 @@ export const siteConfig = {
   },
   nav: {
     links: [
-      { id: 1, name: "Home", href: "#hero" },
-      { id: 2, name: "How it Works", href: "#bento" },
-      { id: 3, name: "Features", href: "#features" },
-      { id: 4, name: "Pricing", href: "#pricing" },
+      { id: 1, name: "Início", href: "#hero" },
+      { id: 2, name: "Sobre nós", href: "#bento" },
+      { id: 3, name: "Como funciona", href: "#features" },
+      { id: 4, name: "Planos", href: "#pricing" },
     ],
   },
   hero: {
     badgeIcon: (
       <svg
-        width="16"
-        height="16"
-        viewBox="0 0 16 16"
+        width="18"
+        height="18"
+        viewBox="0 0 24 24"
         fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        className="dark:fill-white fill-[#364153]"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="size-5"
       >
-        <path d="M7.62758 1.09876C7.74088 1.03404 7.8691 1 7.99958 1C8.13006 1 8.25828 1.03404 8.37158 1.09876L13.6216 4.09876C13.7363 4.16438 13.8316 4.25915 13.8979 4.37347C13.9642 4.48779 13.9992 4.6176 13.9992 4.74976C13.9992 4.88191 13.9642 5.01172 13.8979 5.12604C13.8316 5.24036 13.7363 5.33513 13.6216 5.40076L8.37158 8.40076C8.25828 8.46548 8.13006 8.49952 7.99958 8.49952C7.8691 8.49952 7.74088 8.46548 7.62758 8.40076L2.37758 5.40076C2.26287 5.33513 2.16753 5.24036 2.10123 5.12604C2.03492 5.01172 2 4.88191 2 4.74976C2 4.6176 2.03492 4.48779 2.10123 4.37347C2.16753 4.25915 2.26287 4.16438 2.37758 4.09876L7.62758 1.09876Z" />
-        <path d="M2.56958 7.23928L2.37758 7.34928C2.26287 7.41491 2.16753 7.50968 2.10123 7.624C2.03492 7.73831 2 7.86813 2 8.00028C2 8.13244 2.03492 8.26225 2.10123 8.37657C2.16753 8.49089 2.26287 8.58566 2.37758 8.65128L7.62758 11.6513C7.74088 11.716 7.8691 11.75 7.99958 11.75C8.13006 11.75 8.25828 11.716 8.37158 11.6513L13.6216 8.65128C13.7365 8.58573 13.8321 8.49093 13.8986 8.3765C13.965 8.26208 14 8.13211 14 7.99978C14 7.86745 13.965 7.73748 13.8986 7.62306C13.8321 7.50864 13.7365 7.41384 13.6216 7.34828L13.4296 7.23828L9.11558 9.70328C8.77568 9.89744 8.39102 9.99956 7.99958 9.99956C7.60814 9.99956 7.22347 9.89744 6.88358 9.70328L2.56958 7.23928Z" />
-        <path d="M2.37845 10.5993L2.57045 10.4893L6.88445 12.9533C7.22435 13.1474 7.60901 13.2496 8.00045 13.2496C8.39189 13.2496 8.77656 13.1474 9.11645 12.9533L13.4305 10.4883L13.6225 10.5983C13.7374 10.6638 13.833 10.7586 13.8994 10.8731C13.9659 10.9875 14.0009 11.1175 14.0009 11.2498C14.0009 11.3821 13.9659 11.5121 13.8994 11.6265C13.833 11.7409 13.7374 11.8357 13.6225 11.9013L8.37245 14.9013C8.25915 14.966 8.13093 15 8.00045 15C7.86997 15 7.74175 14.966 7.62845 14.9013L2.37845 11.9013C2.2635 11.8357 2.16795 11.7409 2.10148 11.6265C2.03501 11.5121 2 11.3821 2 11.2498C2 11.1175 2.03501 10.9875 2.10148 10.8731C2.16795 10.7586 2.2635 10.6638 2.37845 10.5983V10.5993Z" />
+        <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+        <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
+        <path d="M7 21h10" />
+        <path d="M12 3v18" />
+        <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" />
       </svg>
     ),
-    badge: "Introducing custom automations",
-    title: "Meet your AI Agent Streamline your workflow",
+    badge: "Justiça acessível começa aqui",
+    title: "Descreva seu problema. Conectamos você ao advogado certo.",
     description:
-      "AI assistant designed to streamline your digital workflows and handle mundane tasks, so you can focus on what truly matters",
+      "Uma plataforma que usa IA para interpretar sua situação, oferecer orientação inicial e conectar você ao advogado certo — tudo de forma simples, rápida e segura.",
     cta: {
       primary: {
-        text: "Try for Free",
-        href: "#",
+        text: "Experimentar agora",
+        href: "/login",
       },
       secondary: {
-        text: "Log in",
-        href: "#",
+        text: "Entrar",
+        href: "/login",
       },
     },
   },
@@ -292,56 +297,56 @@ export const siteConfig = {
     items: [
       {
         id: 1,
-        title: "Ask Your AI Agent Directly",
+        title: "Fale com nossa IA e descreva seu problema",
         content:
-          "Speak or type your command—let SkyAgent capture your intent. Your request instantly sets the process in motion.",
+          "Use linguagem simples — nossa IA entende e interpreta sua situação em segundos.",
         image:
           "https://images.unsplash.com/photo-1720371300677-ba4838fa0678?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       },
       {
         id: 2,
-        title: "Let SkyAgent Process It",
+        title: "A IA analisa e identifica seu caso",
         content:
-          "We prioritize the needs and preferences of our users in our design process.",
+          "Nossa inteligência artificial identifica a área do direito e busca informações relevantes.",
         image:
           "https://images.unsplash.com/photo-1686170287433-c95faf6d3608?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwzfHx8ZW58MHx8fHx8fA%3D%3D",
       },
       {
         id: 3,
-        title: "Receive Instant, Actionable Results",
+        title: "Conexão com o melhor advogado",
         content:
-          "Our features seamlessly integrate with your existing systems for a smooth experience.",
+          "Conectamos você com o advogado especialista ideal para seu caso específico.",
         image:
           "https://images.unsplash.com/photo-1720378042271-60aff1e1c538?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D",
       },
       {
         id: 4,
-        title: "Continuous Improvement",
+        title: "Foco em próximos passos para o usuário",
         content:
-          "We are constantly updating and improving our features to provide the best experience.",
+          "Orientamos você sobre os próximos passos e acompanhamos todo o processo legal.",
         image:
           "https://images.unsplash.com/photo-1666882990322-e7f3b8df4f75?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1yZWxhdGVkfDF8fHxlbnwwfHx8fHw%3D",
       },
     ],
   },
   bentoSection: {
-    title: "Empower Your Workflow with AI",
+    title: "Triagem Jurídica Inteligente",
     description:
-      "Ask your AI Agent for real-time collaboration, seamless integrations, and actionable insights to streamline your operations.",
+      "Nossa inteligência artificial entende sua situação, identifica a área do Direito e conecta você ao especialista ideal — com clareza, agilidade e segurança.",
     items: [
       {
         id: 1,
         content: <FirstBentoAnimation />,
-        title: "Real-time AI Collaboration",
+        title: "Triagem Jurídica Inteligente",
         description:
-          "Experience real-time assistance. Ask your AI Agent to coordinate tasks, answer questions, and maintain team alignment.",
+          "Descreva seu problema em linguagem simples. Nossa IA analisa, pesquisa casos semelhantes e te dá um direcionamento inicial.",
       },
       {
         id: 2,
         content: <SecondBentoAnimation />,
-        title: "Seamless Integrations",
+        title: "Fontes consultadas automaticamente",
         description:
-          "Unite your favorite tools for effortless connectivity. Boost productivity through interconnected workflows.",
+          "JusBrasil, TSE, CNJ, tribunais estaduais, legislação federal e outras bases públicas confiáveis.",
       },
       {
         id: 3,
@@ -353,16 +358,16 @@ export const siteConfig = {
             ]}
           />
         ),
-        title: "Instant Insight Reporting",
+        title: "Casos triados automaticamente pela IA",
         description:
-          "Transform raw data into clear insights in seconds. Empower smarter decisions with real-time, always-learning intelligence.",
+          "A cada segundo, mais pessoas usam nossa IA para entender seus direitos e tomar decisões jurídicas com mais segurança.",
       },
       {
         id: 4,
         content: <FourthBentoAnimation once={false} />,
-        title: "Smart Automation",
+        title: "Atendimento mais produtivo",
         description:
-          "Set it, forget it. Your AI Agent tackles repetitive tasks so you can focus on strategy, innovation, and growth.",
+          "Advogados recebem clientes já preparados, economizando tempo e aumentando conversões.",
       },
     ],
   },
@@ -389,9 +394,9 @@ export const siteConfig = {
     },
   ],
   growthSection: {
-    title: "Built for Secure Growth",
+    title: "Segurança jurídica com tecnologia de ponta",
     description:
-      "Where advanced security meets seamless scalability—designed to protect your data and empower your growth.",
+      "Protegemos seus dados com os mais altos padrões de segurança — para que você use a plataforma com tranquilidade e confiança.",
     items: [
       {
         id: 1,
@@ -671,9 +676,9 @@ export const siteConfig = {
           </div>
         ),
 
-        title: "Advanced Task Security",
+        title: "Segurança de dados",
         description:
-          "Safeguard your tasks with state-of-art encryption and secure access to your workflow data.",
+          "Privacidade garantida. Todas as informações trocadas na plataformas seguem às normas da LGPD e o Código de Ética da OAB.",
       },
       {
         id: 2,
@@ -683,80 +688,70 @@ export const siteConfig = {
           </div>
         ),
 
-        title: "Scalable for Teams",
+        title: "Pronto para crescer com você",
         description:
-          "Grow with your team. Track tasks across multiple workspaces and all team members.",
+          "Nossa estrutura suporta milhares de atendimentos simultâneos, com estabilidade e agilidade em qualquer lugar do mundo.",
       },
     ],
   },
   quoteSection: {
     quote:
-      "SkyAgent has transformed our daily operations. Tasks that once consumed hours now complete in moments, freeing our team to focus on creativity and strategic growth.",
+      "Construímos o Advoga.ai um propósito claro: tornar o acesso à justiça algo simples, rápido e acessível. Ao integrar IA com o conhecimento jurídico, conseguimos transformar o jeito como as pessoas lidam com seus problemas legais.",
     author: {
-      name: "Alex Johnson",
-      role: "CTO, Innovatech",
-      image: "https://randomuser.me/api/portraits/men/91.jpg",
+      name: "Mateus Reis",
+      role: "CTO, Advoga.ai",
+      image: "/mateus-icon-landing-page.png",
     },
   },
   pricing: {
-    title: "Pricing that scales with you",
+    title: "Planos que se adaptam à sua necessidade jurídica",
     description:
-      "Whichever plan you pick, it's free until you love your docs. That's our promise.",
+      "Escolha o plano ideal e tenha acesso a consultorias jurídicas com especialistas — de forma simples, rápida e inclusa no valor.",
     pricingItems: [
       {
-        name: "Free",
+        name: "Teste gratuito",
         href: "#",
-        price: "$0",
-        period: "month",
-        yearlyPrice: "$0",
-        features: [
-          "Custom domain",
-          "SEO-optimizations",
-          "Auto-generated API docs",
-          "Built-in components library",
-        ],
-        description: "Perfect for individual users",
-        buttonText: "Start Free",
+        price: "Grátis",
+        period: "mês",
+        yearlyPrice: "Grátis",
+        features: ["1 triagem automatizada com IA", "1 consultoria"],
+        description: "Ideal para quem quer experimentar a plataforma.",
+        buttonText: "Fazer teste gratuito",
         buttonColor: "bg-accent text-primary",
         isPopular: false,
       },
       {
-        name: "Startup",
+        name: "Plano Profissional",
         href: "#",
-        price: "$12",
-        period: "month",
-        yearlyPrice: "$120",
+        price: "R$49",
+        period: "mês",
+        yearlyPrice: "R$490",
         features: [
-          "Custom domain",
-          "SEO-optimizations",
-          "Auto-generated API docs",
-          "Built-in components library",
-          "E-commerce integration",
-          "User authentication system",
-          "Multi-language support",
-          "Real-time collaboration tools",
+          "Até 3 triagens com IA por mês",
+          "Até 3 consultorias por mês",
+          "Acesso prioritário a especialistas",
+          "Sugestões e próximos passos personalizados",
         ],
-        description: "Ideal for professionals and small teams",
-        buttonText: "Upgrade to Pro",
+        description: "Para quem precisa de apoio jurídico contínuo.",
+        buttonText: "Assinar plano",
         buttonColor: "bg-secondary text-white",
         isPopular: true,
       },
       {
-        name: "Enterprise",
+        name: "Plano Escritório / Avançado",
         href: "#",
-        price: "$24",
-        period: "month",
-        yearlyPrice: "$240",
+        price: "Personalizado",
+        period: "mês",
+        yearlyPrice: "Personalizado",
         features: [
-          "Custom domain",
-          "SEO-optimizations",
-          "Auto-generated API docs",
-          "Built-in components librarys",
-          "Real-time collaboration tools",
+          "Triagens ilimitadas com IA jurídica",
+          "Distribuição inteligente de casos para especialistas",
+          "Suporte dedicado e onboarding personalizado",
+          "Equipe jurídica dedicada e priorização no atendimento",
         ],
-        description: "Best for large teams and enterprise-level organizations",
-        buttonText: "Contact Sales",
-        buttonColor: "bg-primary text-primary-foreground",
+        description: "Para empresas, times jurídicos ou alta demanda.",
+        buttonText: "Entrar em contato",
+        buttonColor: "bg-accent text-primary",
         isPopular: false,
       },
     ],
