@@ -1,8 +1,8 @@
 "use client";
 
-import { Icons } from "@/components/icons";
 import { NavMenu } from "@/components/nav-menu";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Logo } from "@/components/ui/icons";
 import { siteConfig } from "@/lib/config";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
@@ -27,7 +27,7 @@ const drawerVariants = {
     y: 0,
     rotate: 0,
     transition: {
-      type: "spring",
+      type: "spring" as const,
       damping: 15,
       stiffness: 200,
       staggerChildren: 0.03,
@@ -111,9 +111,9 @@ export function Navbar() {
           )}
         >
           <div className="flex h-[56px] items-center justify-between p-4">
-            <Link href="/" className="flex items-center gap-3">
-              <Icons.logo className="size-7 md:size-10" />
-              <p className="text-lg font-semibold text-primary">SkyAgent</p>
+            <Link href="/" className="flex items-center gap-2">
+              <Logo className="w-6 h-6" />
+              <span className="text-xl font-bold text-brand-700 dark:text-white">Advoga.ai</span>
             </Link>
 
             <NavMenu />
@@ -167,11 +167,9 @@ export function Navbar() {
               {/* Mobile menu content */}
               <div className="flex flex-col gap-4">
                 <div className="flex items-center justify-between">
-                  <Link href="/" className="flex items-center gap-3">
-                    <Icons.logo className="size-7 md:size-10" />
-                    <p className="text-lg font-semibold text-primary">
-                      SkyAgent
-                    </p>
+                  <Link href="/" className="flex items-center gap-2">
+                    <Logo className="w-5 h-5" />
+                    <span className="text-lg font-bold text-brand-700 dark:text-white">Advoga.ai</span>
                   </Link>
                   <button
                     onClick={toggleDrawer}
