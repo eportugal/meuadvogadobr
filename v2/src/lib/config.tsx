@@ -696,11 +696,11 @@ export const siteConfig = {
   },
   quoteSection: {
     quote:
-      "Construímos o Advoga.ai um propósito claro: tornar o acesso à justiça algo simples, rápido e acessível. Ao integrar IA com o conhecimento jurídico, conseguimos transformar o jeito como as pessoas lidam com seus problemas legais.",
+      "Construímos o Advoga.ai com um propósito claro: tornar o acesso à justiça algo simples, rápido e acessível. Ao integrar IA com o conhecimento jurídico, conseguimos transformar o jeito como as pessoas lidam com seus problemas legais.",
     author: {
-      name: "Mateus Reis",
-      role: "CTO, Advoga.ai",
-      image: "/mateus-icon-landing-page.png",
+      name: "Emanoel Portugal",
+      role: "CTO e co-fundador da Advoga.ai",
+      image: "/emanoel-picture.png",
     },
   },
   pricing: {
