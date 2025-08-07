@@ -16,15 +16,15 @@ interface BoxConfig {
 
 const boxConfigs: BoxConfig[] = [
   {
-    title: "Bento grid",
+    title: "Descreva seu caso",
     className: "bg-secondary text-white",
   },
   {
-    title: "Landing Page",
+    title: "Nossa IA analisa",
     className: "bg-secondary/40 text-white",
   },
   {
-    title: "Add Task",
+    title: "Receba orientações iniciais",
     className:
       "bg-secondary/20 border border-secondary border-dashed text-secondary",
   },
@@ -86,7 +86,7 @@ export function FourthBentoAnimation({
           { length: numberOfItems },
           (_, index) => {
             return ((itemWidth + gap) * index) / 2;
-          },
+          }
         );
         setTranslateXValues(newTranslateXValues);
       }

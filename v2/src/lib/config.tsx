@@ -291,13 +291,13 @@ export const siteConfig = {
     ],
   },
   featureSection: {
-    title: "Simple. Seamless. Smart.",
+    title: "Simples. Ágil. Inteligente.",
     description:
-      "Discover how SkyAgent transforms your commands into action in four easy steps",
+      "Descubra como o Advoga.ai transforma sua solicitação em ação em quatro passos simples.",
     items: [
       {
         id: 1,
-        title: "Fale com nossa IA e descreva seu problema",
+        title: "1. Descreva seu problema",
         content:
           "Use linguagem simples — nossa IA entende e interpreta sua situação em segundos.",
         image:
@@ -305,7 +305,7 @@ export const siteConfig = {
       },
       {
         id: 2,
-        title: "A IA analisa e identifica seu caso",
+        title: "2. A IA analisa e identifica seu caso",
         content:
           "Nossa inteligência artificial identifica a área do direito e busca informações relevantes.",
         image:
@@ -313,7 +313,7 @@ export const siteConfig = {
       },
       {
         id: 3,
-        title: "Conexão com o melhor advogado",
+        title: "3. Conexão com o melhor advogado",
         content:
           "Conectamos você com o advogado especialista ideal para seu caso específico.",
         image:
@@ -321,7 +321,7 @@ export const siteConfig = {
       },
       {
         id: 4,
-        title: "Foco em próximos passos para o usuário",
+        title: "4. Foco em próximos passos",
         content:
           "Orientamos você sobre os próximos passos e acompanhamos todo o processo legal.",
         image:
@@ -330,7 +330,7 @@ export const siteConfig = {
     ],
   },
   bentoSection: {
-    title: "Triagem Jurídica Inteligente",
+    title: "Acessbilidade e eficiência com IA",
     description:
       "Nossa inteligência artificial entende sua situação, identifica a área do Direito e conecta você ao especialista ideal — com clareza, agilidade e segurança.",
     items: [
@@ -704,7 +704,7 @@ export const siteConfig = {
     },
   },
   pricing: {
-    title: "Planos que se adaptam à sua necessidade jurídica",
+    title: "Planos que se adaptam à sua necessidade",
     description:
       "Escolha o plano ideal e tenha acesso a consultorias jurídicas com especialistas — de forma simples, rápida e inclusa no valor.",
     pricingItems: [
@@ -759,257 +759,194 @@ export const siteConfig = {
   testimonials: [
     {
       id: "1",
-      name: "Alex Rivera",
-      role: "CTO at InnovateTech",
-      img: "https://randomuser.me/api/portraits/men/91.jpg",
+      name: "Mariana Alves",
+      role: "Empreendedora",
+      img: "https://randomuser.me/api/portraits/women/65.jpg",
       description: (
         <p>
-          The AI-driven analytics from #QuantumInsights have revolutionized our
-          product development cycle.
-          <Highlight>
-            Insights are now more accurate and faster than ever.
-          </Highlight>{" "}
-          A game-changer for tech companies.
+          A experiência com o <b>Advoga.ai</b> foi incrível. Em poucos minutos,
+          a IA indicou o advogado certo para meu caso.{" "}
+          <Highlight>Resolvi tudo sem sair de casa.</Highlight> Atendimento
+          rápido e de confiança.
         </p>
       ),
     },
     {
       id: "2",
-      name: "Samantha Lee",
-      role: "Marketing Director at NextGen Solutions",
-      img: "https://randomuser.me/api/portraits/women/12.jpg",
+      name: "Carlos Henrique",
+      role: "Analista de TI",
+      img: "https://randomuser.me/api/portraits/men/32.jpg",
       description: (
         <p>
-          Implementing #AIStream&apos;s customer prediction model has
-          drastically improved our targeting strategy.
-          <Highlight>Seeing a 50% increase in conversion rates!</Highlight>{" "}
-          Highly recommend their solutions.
+          Sempre tive dificuldade para encontrar um advogado confiável. Com o{" "}
+          <b>Advoga.ai</b>, agendei uma consulta online no mesmo dia.{" "}
+          <Highlight>Economizei tempo e preocupação.</Highlight> Recomendo para
+          qualquer pessoa.
         </p>
       ),
     },
     {
       id: "3",
-      name: "Raj Patel",
-      role: "Founder & CEO at StartUp Grid",
-      img: "https://randomuser.me/api/portraits/men/45.jpg",
+      name: "Renata Santos",
+      role: "Professora",
+      img: "https://randomuser.me/api/portraits/women/44.jpg",
       description: (
         <p>
-          As a startup, we need to move fast and stay ahead. #CodeAI&apos;s
-          automated coding assistant helps us do just that.
-          <Highlight>Our development speed has doubled.</Highlight> Essential
-          tool for any startup.
+          Descrevi minha situação e a plataforma identificou a área do Direito
+          em segundos.{" "}
+          <Highlight>O advogado me orientou com clareza e segurança.</Highlight>{" "}
+          Serviço prático e eficiente.
         </p>
       ),
     },
     {
       id: "4",
-      name: "Emily Chen",
-      role: "Product Manager at Digital Wave",
-      img: "https://randomuser.me/api/portraits/women/83.jpg",
+      name: "Roberto Lima",
+      role: "Aposentado",
+      img: "https://randomuser.me/api/portraits/men/81.jpg",
       description: (
         <p>
-          #VoiceGen&apos;s AI-driven voice synthesis has made creating global
-          products a breeze.
-          <Highlight>Localization is now seamless and efficient.</Highlight> A
-          must-have for global product teams.
+          Usei o <b>Advoga.ai</b> para um caso de herança e fui atendido por um
+          especialista sem precisar sair de casa.{" "}
+          <Highlight>Resolvi tudo online.</Highlight> Simples e rápido.
         </p>
       ),
     },
     {
       id: "5",
-      name: "Michael Brown",
-      role: "Data Scientist at FinTech Innovations",
-      img: "https://randomuser.me/api/portraits/men/1.jpg",
+      name: "Fernanda Costa",
+      role: "Empresária",
+      img: "https://randomuser.me/api/portraits/women/22.jpg",
       description: (
         <p>
-          Leveraging #DataCrunch&apos;s AI for our financial models has given us
-          an edge in predictive accuracy.
-          <Highlight>
-            Our investment strategies are now powered by real-time data
-            analytics.
-          </Highlight>{" "}
-          Transformative for the finance industry.
+          O <b>Advoga.ai</b> revolucionou a forma como busco serviços jurídicos.{" "}
+          <Highlight>Transparente, rápido e eficiente.</Highlight> É como ter um
+          advogado na palma da mão.
         </p>
       ),
     },
     {
       id: "6",
-      name: "Linda Wu",
-      role: "VP of Operations at LogiChain Solutions",
-      img: "https://randomuser.me/api/portraits/women/5.jpg",
+      name: "João Pedro",
+      role: "Estudante de Direito",
+      img: "https://randomuser.me/api/portraits/men/45.jpg",
       description: (
         <p>
-          #LogiTech&apos;s supply chain optimization tools have drastically
-          reduced our operational costs.
-          <Highlight>
-            Efficiency and accuracy in logistics have never been better.
-          </Highlight>{" "}
+          O <b>Advoga.ai</b> me ajudou a encontrar um advogado especialista em
+          Direito Civil em poucos minutos.{" "}
+          <Highlight>Ganhei tempo e confiança no processo.</Highlight>{" "}
+          Plataforma excelente.
         </p>
       ),
     },
     {
       id: "7",
-      name: "Carlos Gomez",
-      role: "Head of R&D at EcoInnovate",
-      img: "https://randomuser.me/api/portraits/men/14.jpg",
+      name: "Luciana Martins",
+      role: "Gerente de RH",
+      img: "https://randomuser.me/api/portraits/women/76.jpg",
       description: (
         <p>
-          By integrating #GreenTech&apos;s sustainable energy solutions,
-          we&apos;ve seen a significant reduction in carbon footprint.
-          <Highlight>
-            Leading the way in eco-friendly business practices.
-          </Highlight>{" "}
-          Pioneering change in the industry.
+          Precisava de orientação sobre rescisão trabalhista e o{" "}
+          <b>Advoga.ai</b> me conectou a um profissional qualificado no mesmo
+          dia.{" "}
+          <Highlight>Evitei erros e tomei decisões mais seguras.</Highlight>
         </p>
       ),
     },
     {
       id: "8",
-      name: "Aisha Khan",
-      role: "Chief Marketing Officer at Fashion Forward",
-      img: "https://randomuser.me/api/portraits/women/56.jpg",
+      name: "Felipe Andrade",
+      role: "Microempreendedor",
+      img: "https://randomuser.me/api/portraits/men/29.jpg",
       description: (
         <p>
-          #TrendSetter&apos;s market analysis AI has transformed how we approach
-          fashion trends.
+          O atendimento foi ágil e direto ao ponto.{" "}
           <Highlight>
-            Our campaigns are now data-driven with higher customer engagement.
+            Em menos de 24 horas eu já tinha um parecer jurídico.
           </Highlight>{" "}
-          Revolutionizing fashion marketing.
+          Recomendo a qualquer empresário.
         </p>
       ),
     },
     {
       id: "9",
-      name: "Tom Chen",
-      role: "Director of IT at HealthTech Solutions",
-      img: "https://randomuser.me/api/portraits/men/18.jpg",
+      name: "Patrícia Gomes",
+      role: "Consultora Financeira",
+      img: "https://randomuser.me/api/portraits/women/91.jpg",
       description: (
         <p>
-          Implementing #MediCareAI in our patient care systems has improved
-          patient outcomes significantly.
-          <Highlight>
-            Technology and healthcare working hand in hand for better health.
-          </Highlight>{" "}
-          A milestone in medical technology.
+          Achei incrível poder resolver tudo sem sair de casa.{" "}
+          <Highlight>O processo é simples e seguro.</Highlight> Com certeza
+          usarei novamente.
         </p>
       ),
     },
     {
       id: "10",
-      name: "Sofia Patel",
-      role: "CEO at EduTech Innovations",
-      img: "https://randomuser.me/api/portraits/women/73.jpg",
+      name: "André Souza",
+      role: "Engenheiro Civil",
+      img: "https://randomuser.me/api/portraits/men/66.jpg",
       description: (
         <p>
-          #LearnSmart&apos;s AI-driven personalized learning plans have doubled
-          student performance metrics.
-          <Highlight>
-            Education tailored to every learner&apos;s needs.
-          </Highlight>{" "}
-          Transforming the educational landscape.
-        </p>
-      ),
-    },
-    {
-      id: "11",
-      name: "Jake Morrison",
-      role: "CTO at SecureNet Tech",
-      img: "https://randomuser.me/api/portraits/men/25.jpg",
-      description: (
-        <p>
-          With #CyberShield&apos;s AI-powered security systems, our data
-          protection levels are unmatched.
-          <Highlight>
-            Ensuring safety and trust in digital spaces.
-          </Highlight>{" "}
-          Redefining cybersecurity standards.
-        </p>
-      ),
-    },
-    {
-      id: "12",
-      name: "Nadia Ali",
-      role: "Product Manager at Creative Solutions",
-      img: "https://randomuser.me/api/portraits/women/78.jpg",
-      description: (
-        <p>
-          #DesignPro&apos;s AI has streamlined our creative process, enhancing
-          productivity and innovation.
-          <Highlight>Bringing creativity and technology together.</Highlight> A
-          game-changer for creative industries.
-        </p>
-      ),
-    },
-    {
-      id: "13",
-      name: "Omar Farooq",
-      role: "Founder at Startup Hub",
-      img: "https://randomuser.me/api/portraits/men/54.jpg",
-      description: (
-        <p>
-          #VentureAI&apos;s insights into startup ecosystems have been
-          invaluable for our growth and funding strategies.
-          <Highlight>
-            Empowering startups with data-driven decisions.
-          </Highlight>{" "}
-          A catalyst for startup success.
+          Com o <b>Advoga.ai</b>, finalmente consegui atendimento rápido e de
+          qualidade para uma questão de contrato.{" "}
+          <Highlight>Serviço moderno e eficiente.</Highlight>
         </p>
       ),
     },
   ],
   faqSection: {
-    title: "Frequently Asked Questions",
+    title: "Perguntas Frequentes",
     description:
-      "Answers to common questions about SkyAgent and its features. If you have any other questions, please don't hesitate to contact us.",
+      "Respostas para as dúvidas mais comuns sobre o Advoga.ai e como ele pode ajudar você a se conectar com o advogado certo para o seu caso. Se tiver qualquer outra pergunta, não hesite em entrar em contato conosco.",
     faQitems: [
       {
         id: 1,
-        question: "What is an AI Agent?",
+        question: "O que é o Advoga.ai?",
         answer:
-          "An AI Agent is an intelligent software program that can perform tasks autonomously, learn from interactions, and make decisions to help achieve specific goals. It combines artificial intelligence and machine learning to provide personalized assistance and automation.",
+          "O Advoga.ai é uma plataforma de tecnologia jurídica (legaltech) que conecta pessoas que precisam de orientação jurídica a advogados especializados, de forma rápida, segura e prática, usando inteligência artificial para identificar o profissional ideal para o seu caso.",
       },
       {
         id: 2,
-        question: "How does SkyAgent work?",
+        question: "Como funciona a triagem com inteligência artificial?",
         answer:
-          "SkyAgent works by analyzing your requirements, leveraging advanced AI algorithms to understand context, and executing tasks based on your instructions. It can integrate with your workflow, learn from feedback, and continuously improve its performance.",
+          "Você descreve seu problema em linguagem simples e nossa IA analisa as informações para indicar a área do Direito relacionada e sugerir advogados qualificados para ajudar. Tudo acontece de forma automática e em poucos segundos.",
       },
       {
         id: 3,
-        question: "How secure is my data?",
+        question: "Meus dados estão seguros?",
         answer:
-          "We implement enterprise-grade security measures including end-to-end encryption, secure data centers, and regular security audits. Your data is protected according to industry best practices and compliance standards.",
+          "Sim. O Advoga.ai utiliza criptografia e segue padrões rigorosos de proteção de dados para garantir sua privacidade. Suas informações são compartilhadas apenas com advogados que você autorizar.",
       },
       {
         id: 4,
-        question: "Can I integrate my existing tools?",
+        question: "Posso falar com o advogado antes de contratar?",
         answer:
-          "Yes, SkyAgent is designed to be highly compatible with popular tools and platforms. We offer APIs and pre-built integrations for seamless connection with your existing workflow tools and systems.",
+          "Sim. Você pode agendar uma consulta online ou por vídeo para esclarecer dúvidas antes de decidir contratar o serviço.",
       },
       {
         id: 5,
-        question: "Is there a free trial available?",
+        question: "O Advoga.ai atende em todo o Brasil?",
         answer:
-          "Yes, we offer a 14-day free trial that gives you full access to all features. No credit card is required to start your trial, and you can upgrade or cancel at any time.",
+          "Sim. A plataforma conecta clientes e advogados em todo o território nacional, permitindo consultas online de qualquer lugar.",
       },
       {
         id: 6,
-        question: "How does SkyAgent save me time?",
+        question: "Quanto custa usar o Advoga.ai?",
         answer:
-          "SkyAgent automates repetitive tasks, streamlines workflows, and provides quick solutions to common challenges. This automation and efficiency can save hours of manual work, allowing you to focus on more strategic activities.",
+          "A triagem com a IA é gratuita para teste. Caso você queira contratar um advogado, o valor da consulta ou serviço é informado previamente e pode variar conforme o profissional e o tipo de demanda.",
       },
     ],
   },
   ctaSection: {
     id: "cta",
-    title: "Automate. Simplify. Thrive",
+    title: "Conecte-se. Resolva. Avance.",
     backgroundImage: "/agent-cta-background.png",
     button: {
-      text: "Start Your 30-Day Free Trial Today",
+      text: "Comece Agora Gratuitamente",
       href: "#",
     },
-    subtext: "Cancel anytime, no questions asked",
+    subtext: "Agende sua consulta online em minutos. Sem compromisso inicial.",
   },
   footerLinks: [
     {

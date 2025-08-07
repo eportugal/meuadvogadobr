@@ -113,7 +113,9 @@ export function Navbar() {
           <div className="flex h-[56px] items-center justify-between p-4">
             <Link href="/" className="flex items-center gap-2">
               <Logo className="w-6 h-6" />
-              <span className="text-xl font-bold text-brand-700 dark:text-white">Advoga.ai</span>
+              <span className="text-xl font-bold logo-font text-gray-950 dark:text-white">
+                Advoga.ai
+              </span>
             </Link>
 
             <NavMenu />
@@ -169,7 +171,9 @@ export function Navbar() {
                 <div className="flex items-center justify-between">
                   <Link href="/" className="flex items-center gap-2">
                     <Logo className="w-5 h-5" />
-                    <span className="text-lg font-bold text-brand-700 dark:text-white">Advoga.ai</span>
+                    <span className="text-lg font-bold text-brand-700 dark:text-white">
+                      Advoga.ai
+                    </span>
                   </Link>
                   <button
                     onClick={toggleDrawer}

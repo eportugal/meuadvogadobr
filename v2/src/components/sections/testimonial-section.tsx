@@ -12,11 +12,11 @@ export function TestimonialSection() {
     >
       <SectionHeader>
         <h2 className="text-3xl md:text-4xl font-medium tracking-tighter text-center text-balance">
-          Empower Your Workflow with AI
+          O que nossos clientes dizem
         </h2>
         <p className="text-muted-foreground text-center text-balance font-medium">
-          Ask your AI Agent for real-time collaboration, seamless integrations,
-          and actionable insights to streamline your operations.
+          Histórias reais de pessoas que encontraram soluções jurídicas rápidas
+          e seguras com o Advoga.ai.
         </p>
       </SectionHeader>
       <SocialProofTestimonials testimonials={testimonials} />

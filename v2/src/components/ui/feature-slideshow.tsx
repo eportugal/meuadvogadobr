@@ -22,14 +22,14 @@ const AccordionItem = forwardRef<HTMLDivElement, AccordionItemProps>(
     <Accordion.Item
       className={cn(
         "mt-px overflow-hidden focus-within:relative focus-within:z-10",
-        className,
+        className
       )}
       {...props}
       ref={forwardedRef}
     >
       {children}
     </Accordion.Item>
-  ),
+  )
 );
 AccordionItem.displayName = "AccordionItem";
 
@@ -44,7 +44,7 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
       <Accordion.Trigger
         className={cn(
           "group flex h-[45px] flex-1 cursor-pointer items-center justify-between p-3 text-[15px] leading-none outline-none",
-          className,
+          className
         )}
         {...props}
         ref={forwardedRef}
@@ -52,7 +52,7 @@ const AccordionTrigger = forwardRef<HTMLButtonElement, AccordionTriggerProps>(
         {children}
       </Accordion.Trigger>
     </Accordion.Header>
-  ),
+  )
 );
 AccordionTrigger.displayName = "AccordionTrigger";
 
@@ -66,14 +66,14 @@ const AccordionContent = forwardRef<HTMLDivElement, AccordionContentProps>(
     <Accordion.Content
       className={cn(
         "overflow-hidden text-[15px] font-medium data-[state=closed]:animate-slide-up data-[state=open]:animate-slide-down",
-        className,
+        className
       )}
       {...props}
       ref={forwardedRef}
     >
       <div className="p-3">{children}</div>
     </Accordion.Content>
-  ),
+  )
 );
 AccordionContent.displayName = "AccordionContent";
 
@@ -145,7 +145,7 @@ export const Feature = ({
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentIndex((prevIndex) =>
-        prevIndex !== undefined ? (prevIndex + 1) % featureItems.length : 0,
+        prevIndex !== undefined ? (prevIndex + 1) % featureItems.length : 0
       );
     }, collapseDelay);
 
@@ -173,7 +173,7 @@ export const Feature = ({
         const cardWidth = carousel.querySelector(".card")?.clientWidth || 0;
         const newIndex = Math.min(
           Math.floor(scrollLeft / cardWidth),
-          featureItems.length - 1,
+          featureItems.length - 1
         );
         setCurrentIndex(newIndex);
       };
@@ -197,7 +197,7 @@ export const Feature = ({
 
     if (!currentItem) {
       return (
-        <div className="aspect-auto h-full w-full rounded-xl border border-neutral-300/50 bg-gray-200 p-1 animate-pulse" />
+        <div className="aspect-auto h-full w-full  border border-neutral-300/50 bg-gray-200 p-1 animate-pulse" />
       );
     }
 
@@ -209,7 +209,7 @@ export const Feature = ({
             className={cn(
               "absolute inset-0 bg-gray-200 rounded-xl border border-neutral-300/50",
               "transition-all duration-150",
-              imageLoaded ? "opacity-0" : "opacity-100",
+              imageLoaded ? "opacity-0" : "opacity-100"
             )}
           />
 
@@ -221,7 +221,7 @@ export const Feature = ({
             className={cn(
               "aspect-auto h-full w-full rounded-xl border border-neutral-300/50 object-cover p-1",
               "transition-all duration-300",
-              imageLoaded ? "opacity-100 blur-0" : "opacity-0 blur-xl",
+              imageLoaded ? "opacity-100 blur-0" : "opacity-0 blur-xl"
             )}
             initial={{
               opacity: 0,
@@ -284,9 +284,8 @@ export const Feature = ({
                 <AccordionItem
                   key={item.id}
                   className={cn(
-                    "relative data-[state=open]:bg-white dark:data-[state=open]:bg-[#27272A] rounded-lg data-[state=closed]:rounded-none data-[state=closed]:border-0",
-                    "dark:data-[state=open]:shadow-[0px_0px_0px_1px_rgba(249,250,251,0.06),0px_0px_0px_1px_var(--color-zinc-800,#27272A),0px_1px_2px_-0.5px_rgba(0,0,0,0.24),0px_2px_4px_-1px_rgba(0,0,0,0.24)]",
-                    "data-[state=open]:shadow-[0px_0px_1px_0px_rgba(0,0,0,0.16),0px_1px_2px_-0.5px_rgba(0,0,0,0.16)]",
+                    "relative dark:data-[state=open]:bg-[#27272A] data-[state=closed]:rounded-none data-[state=closed]:border-0",
+                    "dark:data-[state=open]:shadow-[0px_0px_0px_1px_rgba(249,250,251,0.06),0px_0px_0px_1px_var(--color-zinc-800,#27272A),0px_1px_2px_-0.5px_rgba(0,0,0,0.24),0px_2px_4px_-1px_rgba(0,0,0,0.24)]"
                   )}
                   value={`item-${index}`}
                 >
@@ -302,9 +301,9 @@ export const Feature = ({
                           linePosition === "right",
                         "left-0 right-0 top-0 h-0.5 w-full":
                           linePosition === "top",
-                        "left-0 right-0 bottom-0 h-0.5 w-full":
+                        "left-0 right-0 bottom-0 h-1 w-full":
                           linePosition === "bottom",
-                      },
+                      }
                     )}
                     data-state={currentIndex === index ? "open" : "closed"}
                   >
@@ -314,10 +313,10 @@ export const Feature = ({
                         lineColor,
                         {
                           "left-0 top-0 w-full": ["left", "right"].includes(
-                            linePosition,
+                            linePosition
                           ),
                           "left-0 top-0 h-full": ["top", "bottom"].includes(
-                            linePosition,
+                            linePosition
                           ),
                         },
                         currentIndex === index
@@ -325,8 +324,8 @@ export const Feature = ({
                             ? "h-full"
                             : "w-full"
                           : ["left", "right"].includes(linePosition)
-                            ? "h-0"
-                            : "w-0",
+                            ? "h-"
+                            : "w-0"
                       )}
                       style={{
                         transitionDuration:
@@ -337,7 +336,7 @@ export const Feature = ({
                   <AccordionTrigger className="font-semibold text-lg tracking-tight text-left">
                     {item.title}
                   </AccordionTrigger>
-                  <AccordionContent className="text-sm font-medium">
+                  <AccordionContent className="text-sm font-medium text-gray-600">
                     {item.content}
                   </AccordionContent>
                 </AccordionItem>
@@ -378,11 +377,10 @@ export const Feature = ({
                         linePosition === "left",
                       "bottom-0 top-0 h-full w-0.5 right-0":
                         linePosition === "right",
-                      "left-0 right-0 top-0 h-0.5 w-full":
-                        linePosition === "top",
-                      "left-0 right-0 bottom-0 h-0.5 w-full":
+                      "left-0 right-0 top-0 h-1 w-full": linePosition === "top",
+                      "left-0 right-0 bottom-0 h-1 w-full":
                         linePosition === "bottom",
-                    },
+                    }
                   )}
                   data-state={currentIndex === index ? "open" : "closed"}
                 >
@@ -392,10 +390,10 @@ export const Feature = ({
                       lineColor,
                       {
                         "left-0 top-0 w-full": ["left", "right"].includes(
-                          linePosition,
+                          linePosition
                         ),
                         "left-0 top-0 h-full": ["top", "bottom"].includes(
-                          linePosition,
+                          linePosition
                         ),
                       },
                       currentIndex === index
@@ -403,8 +401,8 @@ export const Feature = ({
                           ? "h-full"
                           : "w-full"
                         : ["left", "right"].includes(linePosition)
-                          ? "h-0"
-                          : "w-0",
+                          ? "h-"
+                          : "w-0"
                     )}
                     style={{
                       transitionDuration:

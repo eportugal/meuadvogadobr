@@ -23,14 +23,16 @@ export function CTASection() {
             <h1 className="text-white text-4xl md:text-7xl font-medium tracking-tighter max-w-xs md:max-w-xl text-center">
               {ctaSection.title}
             </h1>
-            <div className="absolute bottom-10 flex flex-col items-center justify-center gap-2">
+            <div className="absolute bottom-20 flex flex-col items-center justify-center gap-2">
               <Link
                 href={ctaSection.button.href}
                 className="bg-white text-black font-semibold text-sm h-10 w-fit px-4 rounded-full flex items-center justify-center shadow-md"
               >
                 {ctaSection.button.text}
               </Link>
-              <span className="text-white text-sm">{ctaSection.subtext}</span>
+              <span className="text-white text-sm mt-2">
+                {ctaSection.subtext}
+              </span>
             </div>
           </div>
         </div>
