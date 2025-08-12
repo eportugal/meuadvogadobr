@@ -4,8 +4,8 @@ import {
   UpdateItemCommand,
   PutItemCommand,
 } from "@aws-sdk/client-dynamodb";
-import { decreaseCredit } from "../../utils/decreaseCredit";
-import { createReminderSchedule } from "../../utils/scheduleReminder";
+import { decreaseCredit } from "../../../../../v1/app/utils/decreaseCredit";
+import { createReminderSchedule } from "../../../../../v1/app/utils/scheduleReminder";
 import { getNextAppointmentDate } from "../../utils/getNextAppointmentDate"; // ✅
 
 const client = new DynamoDBClient({

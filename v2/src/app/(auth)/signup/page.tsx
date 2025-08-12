@@ -1,21 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { InputField } from "@/components/advoga-ui/input/input";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/advoga-ui/button/button";
 import { Label } from "@/components/ui/label";
-import {
-  Mail,
-  Eye,
-  EyeOff,
-  ArrowLeft,
-  Lock,
-  ChevronsUpDown,
-  Check,
-  X,
-} from "lucide-react";
+import { Mail, Eye, EyeOff, ArrowLeft, Lock } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -26,38 +17,28 @@ import {
 } from "@/components/advoga-ui/select";
 import { Badge } from "@/components/advoga-ui/badge/badge";
 import { MultiSelectHours } from "@/components/advoga-ui/multi-selector-hours";
-
 import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-} from "@/components/ui/popover";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command";
-import { Checkbox } from "@/components/ui/checkbox";
-
-type MultiSelectHoursProps = {
-  value: string[];
-  onChange: (next: string[]) => void;
-  options: string[];
-  placeholder?: string;
-  className?: string;
-};
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/advoga-ui/input-otp";
 
 export default function SignUpFlowLawyerStatic() {
   const [step, setStep] = useState<"signup" | "confirm">("signup");
   const [signupStep, setSignupStep] = useState<
-    "basic" | "professional" | "availability"
+    "basic" | "professional" | "availability" | "confirmation"
   >("basic");
-
+  const [email, setEmail] = useState("");
+  const [otp, setOtp] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [practiceAreas, setPracticeAreas] = useState<string[]>([]);
+  const [firstName, setFirstName] = useState("");
   const [oabUF, setOabUF] = useState("");
+  const [oabNumber, setOabNumber] = useState("");
+  const [isOabValid, setIsOabValid] = useState<boolean | null>(null);
+  const [isOabValidating, setIsOabValidating] = useState(false);
+  const [oabValidationError, setOabValidationError] = useState("");
   const [availability, setAvailability] = useState<Record<string, string[]>>({
     monday: [],
     tuesday: [],
@@ -123,6 +104,122 @@ export default function SignUpFlowLawyerStatic() {
     "SE",
   ];
 
+  useEffect(() => {
+    const validate = async () => {
+      setIsOabValid(null);
+      setOabValidationError("");
+
+      if (oabNumber.length < 3 || oabUF.length !== 2 || firstName.length < 2)
+        return;
+
+      setIsOabValidating(true);
+      try {
+        const res = await fetch("/api/validar-oab", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            number: oabNumber.trim(),
+            uf: oabUF.trim().toUpperCase(),
+            nome: firstName.trim(),
+          }),
+        });
+
+        const result = await res.json();
+
+        if (!result.success) {
+          setIsOabValid(false);
+          setOabValidationError("Erro interno no servidor");
+          return;
+        }
+
+        if (!result.valid) {
+          setIsOabValid(false);
+          setOabValidationError("Verifique o número de inscrição");
+          return;
+        }
+
+        if (!result.nomeCoincide) {
+          setIsOabValid(false);
+          setOabValidationError("Nome não confere com a OAB");
+          return;
+        }
+
+        setIsOabValid(true);
+        setOabValidationError("");
+      } catch (err: any) {
+        setIsOabValid(false);
+        setOabValidationError("Erro inesperado na validação.");
+      } finally {
+        setIsOabValidating(false);
+      }
+    };
+
+    validate();
+  }, [oabNumber, oabUF, firstName]);
+
+  function handleBasicSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    setSignupStep("professional");
+  }
+
+  async function handleProfessionalSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    if (!oabUF) {
+      setOabValidationError("Selecione a UF da OAB.");
+      setIsOabValid(false);
+      return;
+    }
+
+    if (isOabValidating) {
+      setOabValidationError("Aguarde a validação da OAB…");
+      return;
+    }
+    if (isOabValid !== true) {
+      setOabValidationError(
+        oabValidationError ||
+          "Não foi possível validar a OAB. Verifique os dados."
+      );
+      return;
+    }
+
+    setSignupStep("availability");
+  }
+
+  function handleAvailabilitySubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    const hasAny = Object.values(availability).some((arr) => arr.length > 0);
+    if (!hasAny) {
+      alert("Selecione pelo menos um horário de atendimento.");
+      return;
+    }
+    setSignupStep("confirmation");
+  }
+
+  function handleConfirmationSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!/^\d{6}$/.test(otp)) {
+      alert("Digite o código com 6 dígitos numéricos.");
+      return;
+    }
+  }
+
   return (
     <div className="bg-muted flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-sm md:max-w-3xl">
@@ -169,6 +266,19 @@ export default function SignUpFlowLawyerStatic() {
                       Selecione os horários disponíveis para cada dia da semana.
                     </p>
                   </div>
+                ) : signupStep === "confirmation" ? (
+                  <div className="mb-6">
+                    <Button
+                      onClick={() => setSignupStep("availability")}
+                      variant="ghost"
+                      className="pl-0 text-primary w-fit"
+                    >
+                      <ArrowLeft className="h-4 w-4" /> Voltar
+                    </Button>
+                    <h2 className="text-xl font-bold mt-4">
+                      Confirme seu Cadastro
+                    </h2>
+                  </div>
                 ) : (
                   <div className="text-center mb-6">
                     <h2 className="text-2xl font-bold">Criar Conta</h2>
@@ -179,15 +289,22 @@ export default function SignUpFlowLawyerStatic() {
                 )}
 
                 {step === "signup" && signupStep === "basic" && (
-                  <form className="space-y-4 w-full">
+                  <form
+                    className="space-y-4 w-full"
+                    onSubmit={handleBasicSubmit}
+                  >
                     <div className="grid gap-2 w-full">
                       <Label htmlFor="nome">Nome</Label>
                       <InputField
                         id="nome"
-                        type="nome"
+                        type="text"
                         placeholder="Pedro"
                         required
                         className="w-full"
+                        value={firstName}
+                        onChange={(e) =>
+                          setFirstName((e.target as HTMLInputElement).value)
+                        }
                       />
                     </div>
 
@@ -195,7 +312,7 @@ export default function SignUpFlowLawyerStatic() {
                       <Label htmlFor="sobrenome">Sobrenome</Label>
                       <InputField
                         id="sobrenome"
-                        type="sobrenome"
+                        type="text" // << corrigido
                         placeholder="Ribeiro"
                         required
                       />
@@ -209,6 +326,10 @@ export default function SignUpFlowLawyerStatic() {
                         placeholder="seu@email.com"
                         required
                         leftIcon={Mail}
+                        value={email}
+                        onChange={(e) =>
+                          setEmail((e.target as HTMLInputElement).value)
+                        }
                       />
                     </div>
 
@@ -236,23 +357,53 @@ export default function SignUpFlowLawyerStatic() {
                       />
                     </div>
 
-                    <Button
-                      type="button"
-                      className="w-full"
-                      onClick={() => setSignupStep("professional")}
-                    >
+                    <Button type="submit" className="w-full">
                       Próximo
                     </Button>
                   </form>
                 )}
 
                 {step === "signup" && signupStep === "professional" && (
-                  <form className="space-y-4">
+                  <form
+                    className="space-y-4"
+                    onSubmit={handleProfessionalSubmit}
+                  >
                     <div className="flex gap-2">
                       <div className="flex flex-col gap-2">
                         <Label htmlFor="oabNumber">Número da OAB</Label>
-                        <InputField id="oabNumber" placeholder="123456" />
+                        <InputField
+                          id="oabNumber"
+                          name="oabNumber"
+                          placeholder="123456"
+                          required
+                          type="text"
+                          inputMode="numeric"
+                          maxLength={6}
+                          pattern="^\\d{6}$"
+                          title="Informe exatamente 6 dígitos numéricos."
+                          value={oabNumber}
+                          onChange={(e) => {
+                            const val = (
+                              e.target as HTMLInputElement
+                            ).value.replace(/\D/g, "");
+                            setOabNumber(val);
+                            if (oabValidationError) setOabValidationError("");
+                            if (isOabValid === false) setIsOabValid(null);
+                          }}
+                          onInvalid={(e) => {
+                            (e.target as HTMLInputElement).setCustomValidity(
+                              "Número da OAB inválido. Use exatamente 6 dígitos (somente números)."
+                            );
+                          }}
+                          onInput={(e) => {
+                            (e.target as HTMLInputElement).setCustomValidity(
+                              ""
+                            );
+                          }}
+                          error={oabValidationError || undefined}
+                        />
                       </div>
+
                       <div className="flex flex-col gap-2">
                         <Label htmlFor="oabUF">UF</Label>
                         <Select value={oabUF} onValueChange={setOabUF}>
@@ -271,6 +422,12 @@ export default function SignUpFlowLawyerStatic() {
                         </Select>
                       </div>
                     </div>
+
+                    {isOabValidating && (
+                      <p className="text-xs text-muted-foreground">
+                        Validando OAB…
+                      </p>
+                    )}
 
                     <div>
                       <Label htmlFor="areas">Áreas de Atuação</Label>
@@ -296,20 +453,31 @@ export default function SignUpFlowLawyerStatic() {
                           </Badge>
                         ))}
                       </div>
+                      <input
+                        aria-hidden
+                        tabIndex={-1}
+                        className="sr-only"
+                        value={oabUF}
+                        onChange={() => {}}
+                        required
+                      />
                     </div>
 
                     <Button
-                      type="button"
+                      type="submit"
                       className="w-full"
-                      onClick={() => setSignupStep("availability")}
+                      disabled={isOabValidating}
                     >
-                      Próximo
+                      {isOabValidating ? "Validando..." : "Próximo"}
                     </Button>
                   </form>
                 )}
 
                 {step === "signup" && signupStep === "availability" && (
-                  <form className="space-y-6">
+                  <form
+                    className="space-y-6"
+                    onSubmit={handleAvailabilitySubmit}
+                  >
                     <div className="flex flex-col gap-4">
                       {Object.keys(availability).map((dayKey) => (
                         <div key={dayKey} className="flex flex-col gap-2">
@@ -330,9 +498,39 @@ export default function SignUpFlowLawyerStatic() {
                         </div>
                       ))}
                     </div>
-
                     <Button type="submit" className="w-full">
                       Criar Conta
+                    </Button>
+                  </form>
+                )}
+
+                {step === "signup" && signupStep === "confirmation" && (
+                  <form className="space-y-6">
+                    <div className="flex flex-col gap-4">
+                      <p className="text-sm text-muted-foreground -mt-2 text-left">
+                        Enviamos um código para{" "}
+                        <span className="font-medium">{email}</span>. Digite-o
+                        abaixo para confirmar sua conta.
+                      </p>
+                      <div className="flex justify-center">
+                        <InputOTP maxLength={6}>
+                          <InputOTPGroup>
+                            <InputOTPSlot index={0} />
+                            <InputOTPSlot index={1} />
+                            <InputOTPSlot index={2} />
+                          </InputOTPGroup>
+                          <InputOTPSeparator />
+                          <InputOTPGroup>
+                            <InputOTPSlot index={3} />
+                            <InputOTPSlot index={4} />
+                            <InputOTPSlot index={5} />
+                          </InputOTPGroup>
+                        </InputOTP>
+                      </div>
+                    </div>
+
+                    <Button type="submit" className="w-full">
+                      Confirmar
                     </Button>
                   </form>
                 )}
