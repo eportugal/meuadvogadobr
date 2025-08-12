@@ -2,13 +2,20 @@
 
 import { useState } from "react";
 import { InputField } from "@/components/advoga-ui/input/input";
-import { SelectField } from "@/components/advoga-ui/select";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
-
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/advoga-ui/button/button";
 import { Label } from "@/components/ui/label";
-import { Mail, Eye, EyeOff, CheckCircle, ArrowLeft, Lock } from "lucide-react";
+import {
+  Mail,
+  Eye,
+  EyeOff,
+  ArrowLeft,
+  Lock,
+  ChevronsUpDown,
+  Check,
+  X,
+} from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -16,15 +23,38 @@ import {
   SelectTrigger,
   SelectValue,
   SelectGroup,
-} from "@/components/ui/select";
-import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+} from "@/components/advoga-ui/select";
+import { Badge } from "@/components/advoga-ui/badge/badge";
+import { MultiSelectHours } from "@/components/advoga-ui/multi-selector-hours";
+
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from "@/components/ui/command";
+import { Checkbox } from "@/components/ui/checkbox";
+
+type MultiSelectHoursProps = {
+  value: string[];
+  onChange: (next: string[]) => void;
+  options: string[];
+  placeholder?: string;
+  className?: string;
+};
 
 export default function SignUpFlowLawyerStatic() {
   const [step, setStep] = useState<"signup" | "confirm">("signup");
-  const [signupStep, setSignupStep] = useState<"basic" | "professional">(
-    "basic"
-  );
+  const [signupStep, setSignupStep] = useState<
+    "basic" | "professional" | "availability"
+  >("basic");
+
   const [showPassword, setShowPassword] = useState(false);
   const [practiceAreas, setPracticeAreas] = useState<string[]>([]);
   const [oabUF, setOabUF] = useState("");
@@ -35,6 +65,28 @@ export default function SignUpFlowLawyerStatic() {
     thursday: [],
     friday: [],
   });
+
+  const dayLabels: Record<string, string> = {
+    monday: "Segunda-feira",
+    tuesday: "Terça-feira",
+    wednesday: "Quarta-feira",
+    thursday: "Quinta-feira",
+    friday: "Sexta-feira",
+  };
+
+  const hourOptions = [
+    "08:00",
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
+  ];
 
   const allPracticeAreas = [
     "Direito Civil",
@@ -89,7 +141,7 @@ export default function SignUpFlowLawyerStatic() {
                   <div className="mb-6">
                     <Button
                       onClick={() => setSignupStep("basic")}
-                      variant="link"
+                      variant="ghost"
                       className="pl-0 text-primary w-fit"
                     >
                       <ArrowLeft className="h-4 w-4" /> Voltar
@@ -99,6 +151,22 @@ export default function SignUpFlowLawyerStatic() {
                     </h2>
                     <p className="text-muted-foreground text-sm mt-1">
                       Complete seus dados profissionais para concluir o cadastro
+                    </p>
+                  </div>
+                ) : signupStep === "availability" ? (
+                  <div className="mb-6">
+                    <Button
+                      onClick={() => setSignupStep("professional")}
+                      variant="ghost"
+                      className="pl-0 text-primary w-fit"
+                    >
+                      <ArrowLeft className="h-4 w-4" /> Voltar
+                    </Button>
+                    <h2 className="text-xl font-bold mt-4">
+                      Horários de Atendimento
+                    </h2>
+                    <p className="text-muted-foreground text-sm mt-1">
+                      Selecione os horários disponíveis para cada dia da semana.
                     </p>
                   </div>
                 ) : (
@@ -145,7 +213,7 @@ export default function SignUpFlowLawyerStatic() {
                     </div>
 
                     <div className="grid gap-2">
-                      <Label htmlFor="email">Senha</Label>
+                      <Label htmlFor="password">Senha</Label>
                       <InputField
                         id="password"
                         type={showPassword ? "text" : "password"}
@@ -180,7 +248,7 @@ export default function SignUpFlowLawyerStatic() {
 
                 {step === "signup" && signupStep === "professional" && (
                   <form className="space-y-4">
-                    <div className="flex gap-4">
+                    <div className="flex gap-2">
                       <div className="flex flex-col gap-2">
                         <Label htmlFor="oabNumber">Número da OAB</Label>
                         <InputField id="oabNumber" placeholder="123456" />
@@ -189,7 +257,7 @@ export default function SignUpFlowLawyerStatic() {
                         <Label htmlFor="oabUF">UF</Label>
                         <Select value={oabUF} onValueChange={setOabUF}>
                           <SelectTrigger id="oabUF" className="w-full">
-                            <SelectValue placeholder="Selecione" />
+                            <SelectValue placeholder="DF" />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
@@ -203,6 +271,7 @@ export default function SignUpFlowLawyerStatic() {
                         </Select>
                       </div>
                     </div>
+
                     <div>
                       <Label htmlFor="areas">Áreas de Atuação</Label>
                       <div className="flex flex-wrap gap-2 mt-3">
@@ -212,7 +281,7 @@ export default function SignUpFlowLawyerStatic() {
                             variant={
                               practiceAreas.includes(area)
                                 ? "default"
-                                : "outline"
+                                : "secondary"
                             }
                             onClick={() => {
                               setPracticeAreas((prev) =>
@@ -221,13 +290,47 @@ export default function SignUpFlowLawyerStatic() {
                                   : [...prev, area]
                               );
                             }}
-                            className="cursor-pointer rounded-full px-2 py-1 hover:bg-secondary hover:text-secondary-foreground transition-colors"
+                            className="cursor-pointer rounded-full px-2 py-1 transition-colors"
                           >
                             {area}
                           </Badge>
                         ))}
                       </div>
                     </div>
+
+                    <Button
+                      type="button"
+                      className="w-full"
+                      onClick={() => setSignupStep("availability")}
+                    >
+                      Próximo
+                    </Button>
+                  </form>
+                )}
+
+                {step === "signup" && signupStep === "availability" && (
+                  <form className="space-y-6">
+                    <div className="flex flex-col gap-4">
+                      {Object.keys(availability).map((dayKey) => (
+                        <div key={dayKey} className="flex flex-col gap-2">
+                          <Label className="mb-1">
+                            {dayLabels[dayKey] || dayKey}
+                          </Label>
+                          <MultiSelectHours
+                            value={availability[dayKey]}
+                            options={hourOptions}
+                            onChange={(next) =>
+                              setAvailability((prev) => ({
+                                ...prev,
+                                [dayKey]: next,
+                              }))
+                            }
+                            placeholder="Selecione horários"
+                          />
+                        </div>
+                      ))}
+                    </div>
+
                     <Button type="submit" className="w-full">
                       Criar Conta
                     </Button>
