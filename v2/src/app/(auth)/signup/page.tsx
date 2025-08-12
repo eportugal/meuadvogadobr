@@ -34,6 +34,7 @@ export default function SignUpFlowLawyerStatic() {
   const [showPassword, setShowPassword] = useState(false);
   const [practiceAreas, setPracticeAreas] = useState<string[]>([]);
   const [firstName, setFirstName] = useState("");
+  const [lastName, setlastName] = useState("");
   const [oabUF, setOabUF] = useState("");
   const [oabNumber, setOabNumber] = useState("");
   const [isOabValid, setIsOabValid] = useState<boolean | null>(null);
@@ -104,7 +105,7 @@ export default function SignUpFlowLawyerStatic() {
     "SE",
   ];
 
-  useEffect(() => {
+  /*useEffect(() => {
     const validate = async () => {
       setIsOabValid(null);
       setOabValidationError("");
@@ -155,7 +156,7 @@ export default function SignUpFlowLawyerStatic() {
     };
 
     validate();
-  }, [oabNumber, oabUF, firstName]);
+  }, [oabNumber, oabUF, firstName]); */
 
   function handleBasicSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -171,12 +172,12 @@ export default function SignUpFlowLawyerStatic() {
     e.preventDefault();
 
     const form = e.currentTarget;
-    if (!form.checkValidity()) {
+    /* if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
 
-    if (!oabUF) {
+     if (!oabUF) {
       setOabValidationError("Selecione a UF da OAB.");
       setIsOabValid(false);
       return;
@@ -192,7 +193,7 @@ export default function SignUpFlowLawyerStatic() {
           "Não foi possível validar a OAB. Verifique os dados."
       );
       return;
-    }
+    } */
 
     setSignupStep("availability");
   }
@@ -312,9 +313,13 @@ export default function SignUpFlowLawyerStatic() {
                       <Label htmlFor="sobrenome">Sobrenome</Label>
                       <InputField
                         id="sobrenome"
-                        type="text" // << corrigido
+                        type="text"
+                        value={lastName}
                         placeholder="Ribeiro"
                         required
+                        onChange={(e) =>
+                          setlastName((e.target as HTMLInputElement).value)
+                        }
                       />
                     </div>
 
@@ -374,33 +379,32 @@ export default function SignUpFlowLawyerStatic() {
                         <InputField
                           id="oabNumber"
                           name="oabNumber"
-                          placeholder="123456"
+                          placeholder="12345"
                           required
                           type="text"
                           inputMode="numeric"
-                          maxLength={6}
-                          pattern="^\\d{6}$"
-                          title="Informe exatamente 6 dígitos numéricos."
+                          maxLength={5}
+                          title="Informe exatamente 5 dígitos numéricos."
                           value={oabNumber}
                           onChange={(e) => {
                             const val = (
                               e.target as HTMLInputElement
                             ).value.replace(/\D/g, "");
                             setOabNumber(val);
-                            if (oabValidationError) setOabValidationError("");
-                            if (isOabValid === false) setIsOabValid(null);
+                            // if (oabValidationError) setOabValidationError("");
+                            //if (isOabValid === false) setIsOabValid(null);
                           }}
-                          onInvalid={(e) => {
+                          /*onInvalid={(e) => {
                             (e.target as HTMLInputElement).setCustomValidity(
-                              "Número da OAB inválido. Use exatamente 6 dígitos (somente números)."
+                              "Número da OAB inválido. Use exatamente 5 dígitos (somente números)."
                             );
-                          }}
-                          onInput={(e) => {
+                          }}*/
+                          /* onInput={(e) => {
                             (e.target as HTMLInputElement).setCustomValidity(
                               ""
                             );
-                          }}
-                          error={oabValidationError || undefined}
+                          }}*/
+                          // error={oabValidationError || undefined}
                         />
                       </div>
 
