@@ -27,11 +27,10 @@ export async function POST(req: NextRequest) {
       creditsConsultoria,
     } = await req.json();
 
-    const TABLE_NAME = "users"; // ✅ Confirme o nome exato
+    const TABLE_NAME = "users";
 
     const role: string = "regular";
 
-    // ⚠️ Validar campos obrigatórios
     if (!firstName?.trim() || !lastName?.trim() || !email?.trim()) {
       return NextResponse.json(
         { success: false, error: "Todos os campos são obrigatórios." },
@@ -48,7 +47,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ✅ 1) Checar duplicidade via GSI `email-index`
     const existingUserQuery = new QueryCommand({
       TableName: TABLE_NAME,
       IndexName: "email-index",
@@ -72,7 +70,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // ✅ 2) Incrementar o counter para gerar ID sequencial
     const updateCounterCommand = new UpdateItemCommand({
       TableName: "counters",
       Key: { counterName: { S: "userId" } },
@@ -90,7 +87,6 @@ export async function POST(req: NextRequest) {
 
     if (!newId) throw new Error("Não foi possível gerar novo ID.");
 
-    // ✅ 3) Criar usuário no DynamoDB com o sub do Cognito
     const createUserCommand = new PutItemCommand({
       TableName: TABLE_NAME,
       Item: {

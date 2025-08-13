@@ -14,7 +14,14 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/advoga-ui/input-otp";
-
+import { useRouter } from "next/navigation";
+import {
+  signUp,
+  confirmSignUp,
+  signIn,
+  getCurrentUser,
+  resendSignUpCode,
+} from "aws-amplify/auth";
 type Step = "register" | "confirm";
 
 export function LoginForm({
@@ -35,11 +42,22 @@ export function LoginForm({
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [otp, setOtp] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
   const [msgType, setMsgType] = useState<"success" | "error" | null>(null);
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [loginLoading, setLoginLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+  const [confirmationCode, setConfirmationCode] = useState("");
 
+  function resetMessages() {
+    setError(null);
+    setSuccess(null);
+  }
   async function onRegisterSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setMsg(null);
@@ -103,6 +121,121 @@ export function LoginForm({
       setMsgType("error");
     }
   }
+
+  const handleSignUp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    resetMessages();
+    try {
+      const cleanEmail = email.toLowerCase().trim();
+
+      // 1) cria no Dynamo (users)
+      const dbRes = await fetch("/api/create-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          email: cleanEmail,
+        }),
+      });
+      const dbData = await dbRes.json().catch(() => ({}));
+      if (!dbRes.ok || !dbData?.success) {
+        // se já existe, deixe seguir para confirmar no Cognito
+        if (dbRes.status !== 409) {
+          throw new Error(dbData?.error || "Erro ao criar usuário no banco");
+        }
+      } else {
+        setUserId(dbData.id);
+      }
+
+      // 2) Cognito signUp (Amplify não retorna {success}; se não lançar, deu certo)
+      await signUp({
+        username: cleanEmail,
+        password,
+        options: {
+          userAttributes: {
+            email: cleanEmail,
+            given_name: firstName.trim(),
+            family_name: lastName.trim(),
+            "custom:profile_type": "regular",
+          },
+        },
+      });
+
+      setSuccess("Código de confirmação enviado para seu email!");
+      setStep("confirm");
+    } catch (err: any) {
+      // UsernameExistsException -> usuário já existe; empurre para confirmação
+      const msg = String(err?.message || err);
+      if (/UsernameExistsException/i.test(msg)) {
+        setSuccess(
+          "Conta já existe. Digite o código enviado para o seu e-mail."
+        );
+        setStep("confirm");
+      } else {
+        setError(msg || "Erro desconhecido");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleConfirm = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setConfirmLoading(true);
+    resetMessages();
+    try {
+      const cleanEmail = email.toLowerCase().trim();
+      // Amplify retorna { isSignUpComplete: boolean } (se lançar -> erro)
+      const out = await confirmSignUp({
+        username: cleanEmail,
+        confirmationCode: confirmationCode.trim(),
+      });
+      if (!out.isSignUpComplete) {
+        throw new Error("Confirmação não concluída.");
+      }
+      setSuccess("Conta confirmada! Você já pode entrar.");
+      // aqui você pode já chamar finalizeLogin() automaticamente se preferir
+    } catch (err: any) {
+      setError(err?.message || "Erro inesperado");
+    } finally {
+      setConfirmLoading(false);
+    }
+  };
+
+  const finalizeLogin = async () => {
+    try {
+      setLoginLoading(true);
+      resetMessages();
+      const cleanEmail = email.toLowerCase().trim();
+
+      const res = await signIn({ username: cleanEmail, password });
+      if (!res.isSignedIn) {
+        throw new Error("Não foi possível entrar.");
+      }
+
+      const current = await getCurrentUser(); // { userId, username }
+      if (userId) {
+        // marca ativo e grava o sub do cognito
+        await fetch("/api/update-user-status", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: userId,
+            status: "active",
+            cognitoSub: current.userId,
+          }),
+        }).catch(() => {});
+      }
+
+      router.push("/dashboard");
+    } catch (err: any) {
+      setError(err?.message || "Erro inesperado");
+    } finally {
+      setLoginLoading(false);
+    }
+  };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>

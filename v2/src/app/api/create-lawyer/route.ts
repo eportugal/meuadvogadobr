@@ -1,4 +1,3 @@
-// app/api/create-user/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import {
   DynamoDBClient,
@@ -45,7 +44,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Verificar duplicidade via GSI
     try {
       const existingUserQuery = new QueryCommand({
         TableName: TABLE_NAME,
@@ -69,7 +67,6 @@ export async function POST(req: NextRequest) {
       console.log("[create-user] GSI check falhou (ignorando):", queryError);
     }
 
-    // Incrementa o counter
     const updateCounterCommand = new UpdateItemCommand({
       TableName: "counters",
       Key: { counterName: { S: "userId" } },

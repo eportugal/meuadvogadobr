@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { InputField } from "@/components/advoga-ui/input/input";
 import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
@@ -23,23 +23,32 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "@/components/advoga-ui/input-otp";
+import { useAuth } from "@/contexts/AuthProvider";
 
-export default function SignUpFlowLawyerStatic() {
+export default function SignUpFlowLawyer() {
+  const {
+    registerUser,
+    confirmUserRegistration,
+    resendConfirmationCode,
+    isLoading,
+  } = useAuth();
+
   const [step, setStep] = useState<"signup" | "confirm">("signup");
   const [signupStep, setSignupStep] = useState<
     "basic" | "professional" | "availability" | "confirmation"
   >("basic");
+
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState(""); // 🔐 necessário pro Cognito
   const [otp, setOtp] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [practiceAreas, setPracticeAreas] = useState<string[]>([]);
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setlastName] = useState("");
+  const [practiceAreas, setPracticeAreas] = useState<string[]>([]);
   const [oabUF, setOabUF] = useState("");
   const [oabNumber, setOabNumber] = useState("");
-  const [isOabValid, setIsOabValid] = useState<boolean | null>(null);
-  const [isOabValidating, setIsOabValidating] = useState(false);
-  const [oabValidationError, setOabValidationError] = useState("");
+
   const [availability, setAvailability] = useState<Record<string, string[]>>({
     monday: [],
     tuesday: [],
@@ -48,6 +57,10 @@ export default function SignUpFlowLawyerStatic() {
     friday: [],
   });
 
+  const [lawyerId, setLawyerId] = useState<string | null>(null); // << id do Dynamo
+  const [msg, setMsg] = useState<string | null>(null);
+  const [msgType, setMsgType] = useState<"success" | "error" | null>(null);
+
   const dayLabels: Record<string, string> = {
     monday: "Segunda-feira",
     tuesday: "Terça-feira",
@@ -55,7 +68,6 @@ export default function SignUpFlowLawyerStatic() {
     thursday: "Quinta-feira",
     friday: "Sexta-feira",
   };
-
   const hourOptions = [
     "08:00",
     "09:00",
@@ -69,7 +81,6 @@ export default function SignUpFlowLawyerStatic() {
     "17:00",
     "18:00",
   ];
-
   const allPracticeAreas = [
     "Direito Civil",
     "Direito Penal",
@@ -81,7 +92,6 @@ export default function SignUpFlowLawyerStatic() {
     "Direito Ambiental",
     "Direito Empresarial",
   ];
-
   const ufOptions = [
     "SP",
     "RJ",
@@ -105,119 +115,167 @@ export default function SignUpFlowLawyerStatic() {
     "SE",
   ];
 
-  /*useEffect(() => {
-    const validate = async () => {
-      setIsOabValid(null);
-      setOabValidationError("");
-
-      if (oabNumber.length < 3 || oabUF.length !== 2 || firstName.length < 2)
-        return;
-
-      setIsOabValidating(true);
-      try {
-        const res = await fetch("/api/validar-oab", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            number: oabNumber.trim(),
-            uf: oabUF.trim().toUpperCase(),
-            nome: firstName.trim(),
-          }),
-        });
-
-        const result = await res.json();
-
-        if (!result.success) {
-          setIsOabValid(false);
-          setOabValidationError("Erro interno no servidor");
-          return;
-        }
-
-        if (!result.valid) {
-          setIsOabValid(false);
-          setOabValidationError("Verifique o número de inscrição");
-          return;
-        }
-
-        if (!result.nomeCoincide) {
-          setIsOabValid(false);
-          setOabValidationError("Nome não confere com a OAB");
-          return;
-        }
-
-        setIsOabValid(true);
-        setOabValidationError("");
-      } catch (err: any) {
-        setIsOabValid(false);
-        setOabValidationError("Erro inesperado na validação.");
-      } finally {
-        setIsOabValidating(false);
-      }
-    };
-
-    validate();
-  }, [oabNumber, oabUF, firstName]); */
-
   function handleBasicSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = e.currentTarget;
-    if (!form.checkValidity()) {
-      form.reportValidity();
+    if (!firstName || !lastName || !email || !password) {
+      setMsg("Preencha nome, sobrenome, email e senha.");
+      setMsgType("error");
       return;
     }
+    setMsg(null);
+    setMsgType(null);
     setSignupStep("professional");
   }
 
   async function handleProfessionalSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    const form = e.currentTarget;
-    /* if (!form.checkValidity()) {
-      form.reportValidity();
+    if (!oabUF) {
+      setMsg("Selecione a UF.");
+      setMsgType("error");
       return;
     }
-
-     if (!oabUF) {
-      setOabValidationError("Selecione a UF da OAB.");
-      setIsOabValid(false);
+    if (!oabNumber) {
+      setMsg("Informe o número da OAB.");
+      setMsgType("error");
       return;
     }
-
-    if (isOabValidating) {
-      setOabValidationError("Aguarde a validação da OAB…");
+    if (practiceAreas.length === 0) {
+      setMsg("Selecione pelo menos uma área.");
+      setMsgType("error");
       return;
     }
-    if (isOabValid !== true) {
-      setOabValidationError(
-        oabValidationError ||
-          "Não foi possível validar a OAB. Verifique os dados."
-      );
-      return;
-    } */
-
+    setMsg(null);
+    setMsgType(null);
     setSignupStep("availability");
   }
 
-  function handleAvailabilitySubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleAvailabilitySubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const form = e.currentTarget;
-    if (!form.checkValidity()) {
-      form.reportValidity();
+    setMsg(null);
+    setMsgType(null);
+
+    const hasAnyHour = Object.values(availability).some(
+      (arr) => arr.length > 0
+    );
+    if (!hasAnyHour) {
+      setMsg("Selecione pelo menos um horário de atendimento.");
+      setMsgType("error");
       return;
     }
-    const hasAny = Object.values(availability).some((arr) => arr.length > 0);
-    if (!hasAny) {
-      alert("Selecione pelo menos um horário de atendimento.");
+
+    const reg = await registerUser({
+      username: email,
+      password,
+      profileType: "advogado",
+      firstname: firstName,
+      lastname: lastName,
+    });
+    if (!reg.success) {
+      setMsg(reg.message || "Não foi possível criar a conta.");
+      setMsgType("error");
       return;
     }
+
+    try {
+      const cleanOAB = `${oabNumber.trim()}/${oabUF.trim().toUpperCase()}`;
+
+      const r = await fetch("/api/create-lawyer", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          firstName: firstName.trim(),
+          lastName: lastName.trim(),
+          email: email.toLowerCase().trim(),
+          oab: cleanOAB,
+          practiceAreas,
+        }),
+      });
+
+      const j = await r.json();
+      if (!r.ok || !j.success) {
+        if (r.status !== 409) {
+          setMsg(j.error || "Não foi possível criar o registro do advogado.");
+          setMsgType("error");
+          return;
+        }
+      } else {
+        setLawyerId(j.id as string);
+      }
+    } catch (err) {
+      setMsg("Erro ao salvar o advogado no banco.");
+      setMsgType("error");
+      return;
+    }
+
+    setSignupStep("confirmation");
+    setMsg(`Enviamos um código para ${email}.`);
+    setMsgType("success");
+
     setSignupStep("confirmation");
   }
 
-  function handleConfirmationSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleConfirmationSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setMsg(null);
+    setMsgType(null);
+
     if (!/^\d{6}$/.test(otp)) {
-      alert("Digite o código com 6 dígitos numéricos.");
+      setMsg("Digite o código com 6 dígitos numéricos.");
+      setMsgType("error");
       return;
+    }
+
+    const conf = await confirmUserRegistration(email, otp);
+
+    if (!conf.success) {
+      setMsg(conf.message || "Não foi possível confirmar o código.");
+      setMsgType("error");
+      return;
+    }
+
+    if (lawyerId) {
+      try {
+        const r = await fetch("/api/set-availability", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            lawyerId,
+            weeklySchedule: availability,
+          }),
+        });
+        const j = await r.json();
+        if (!r.ok || !j.success) {
+          setMsg(
+            j.error || "Conta confirmada, mas falhou ao salvar disponibilidade."
+          );
+          setMsgType("error");
+          return;
+        }
+      } catch {
+        setMsg("Conta confirmada, mas houve erro ao salvar disponibilidade.");
+        setMsgType("error");
+        return;
+      }
+    } else {
+      setMsg("Conta confirmada! Complete sua disponibilidade no perfil.");
+      setMsgType("success");
+      return;
+    }
+
+    setMsg("Conta confirmada e disponibilidade salva com sucesso!");
+    setMsgType("success");
+    // TODO: redirecionar para dashboard
+  }
+
+  async function handleResend() {
+    setMsg(null);
+    setMsgType(null);
+    const res = await resendConfirmationCode(email);
+    if (res.success) {
+      setMsgType("success");
+    } else {
+      setMsg(res.message || "Não foi possível reenviar o código.");
+      setMsgType("error");
     }
   }
 
@@ -234,6 +292,7 @@ export default function SignUpFlowLawyerStatic() {
                   className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
                 />
               </div>
+
               <div className="p-8 md:p-10 flex flex-col justify-center">
                 {step === "signup" && signupStep === "professional" ? (
                   <div className="mb-6">
@@ -314,9 +373,9 @@ export default function SignUpFlowLawyerStatic() {
                       <InputField
                         id="sobrenome"
                         type="text"
-                        value={lastName}
                         placeholder="Ribeiro"
                         required
+                        value={lastName}
                         onChange={(e) =>
                           setlastName((e.target as HTMLInputElement).value)
                         }
@@ -346,6 +405,10 @@ export default function SignUpFlowLawyerStatic() {
                         placeholder="Digite sua senha"
                         required
                         leftIcon={Lock}
+                        value={password}
+                        onChange={(e) =>
+                          setPassword((e.target as HTMLInputElement).value)
+                        }
                         rightIcon={
                           <button
                             type="button"
@@ -361,6 +424,19 @@ export default function SignUpFlowLawyerStatic() {
                         }
                       />
                     </div>
+
+                    {msg && signupStep === "basic" && (
+                      <p
+                        className={cn(
+                          "text-sm",
+                          msgType === "error"
+                            ? "text-input-text-error"
+                            : "text-emerald-600"
+                        )}
+                      >
+                        {msg}
+                      </p>
+                    )}
 
                     <Button type="submit" className="w-full">
                       Próximo
@@ -384,27 +460,15 @@ export default function SignUpFlowLawyerStatic() {
                           type="text"
                           inputMode="numeric"
                           maxLength={5}
-                          title="Informe exatamente 5 dígitos numéricos."
                           value={oabNumber}
-                          onChange={(e) => {
-                            const val = (
-                              e.target as HTMLInputElement
-                            ).value.replace(/\D/g, "");
-                            setOabNumber(val);
-                            // if (oabValidationError) setOabValidationError("");
-                            //if (isOabValid === false) setIsOabValid(null);
-                          }}
-                          /*onInvalid={(e) => {
-                            (e.target as HTMLInputElement).setCustomValidity(
-                              "Número da OAB inválido. Use exatamente 5 dígitos (somente números)."
-                            );
-                          }}*/
-                          /* onInput={(e) => {
-                            (e.target as HTMLInputElement).setCustomValidity(
-                              ""
-                            );
-                          }}*/
-                          // error={oabValidationError || undefined}
+                          onChange={(e) =>
+                            setOabNumber(
+                              (e.target as HTMLInputElement).value.replace(
+                                /\D/g,
+                                ""
+                              )
+                            )
+                          }
                         />
                       </div>
 
@@ -427,12 +491,6 @@ export default function SignUpFlowLawyerStatic() {
                       </div>
                     </div>
 
-                    {isOabValidating && (
-                      <p className="text-xs text-muted-foreground">
-                        Validando OAB…
-                      </p>
-                    )}
-
                     <div>
                       <Label htmlFor="areas">Áreas de Atuação</Label>
                       <div className="flex flex-wrap gap-2 mt-3">
@@ -444,13 +502,13 @@ export default function SignUpFlowLawyerStatic() {
                                 ? "default"
                                 : "secondary"
                             }
-                            onClick={() => {
+                            onClick={() =>
                               setPracticeAreas((prev) =>
                                 prev.includes(area)
                                   ? prev.filter((a) => a !== area)
                                   : [...prev, area]
-                              );
-                            }}
+                              )
+                            }
                             className="cursor-pointer rounded-full px-2 py-1 transition-colors"
                           >
                             {area}
@@ -467,12 +525,25 @@ export default function SignUpFlowLawyerStatic() {
                       />
                     </div>
 
+                    {msg && signupStep === "professional" && (
+                      <p
+                        className={cn(
+                          "text-sm",
+                          msgType === "error"
+                            ? "text-input-text-error"
+                            : "text-emerald-600"
+                        )}
+                      >
+                        {msg}
+                      </p>
+                    )}
+
                     <Button
                       type="submit"
                       className="w-full"
-                      disabled={isOabValidating}
+                      disabled={isLoading}
                     >
-                      {isOabValidating ? "Validando..." : "Próximo"}
+                      Próximo
                     </Button>
                   </form>
                 )}
@@ -502,14 +573,35 @@ export default function SignUpFlowLawyerStatic() {
                         </div>
                       ))}
                     </div>
-                    <Button type="submit" className="w-full">
-                      Criar Conta
+
+                    {msg && signupStep === "availability" && (
+                      <p
+                        className={cn(
+                          "text-sm",
+                          msgType === "error"
+                            ? "text-input-text-error"
+                            : "text-emerald-600"
+                        )}
+                      >
+                        {msg}
+                      </p>
+                    )}
+
+                    <Button
+                      type="submit"
+                      className="w-full"
+                      disabled={isLoading}
+                    >
+                      {isLoading ? "Criando..." : "Criar Conta"}
                     </Button>
                   </form>
                 )}
 
                 {step === "signup" && signupStep === "confirmation" && (
-                  <form className="space-y-6">
+                  <form
+                    className="space-y-6"
+                    onSubmit={handleConfirmationSubmit}
+                  >
                     <div className="flex flex-col gap-4">
                       <p className="text-sm text-muted-foreground -mt-2 text-left">
                         Enviamos um código para{" "}
@@ -517,7 +609,12 @@ export default function SignUpFlowLawyerStatic() {
                         abaixo para confirmar sua conta.
                       </p>
                       <div className="flex justify-center">
-                        <InputOTP maxLength={6} value={otp} onChange={setOtp}>
+                        <InputOTP
+                          maxLength={6}
+                          value={otp}
+                          onChange={setOtp}
+                          autoFocus
+                        >
                           <InputOTPGroup>
                             <InputOTPSlot index={0} />
                             <InputOTPSlot index={1} />
@@ -536,9 +633,37 @@ export default function SignUpFlowLawyerStatic() {
                       </div>
                     </div>
 
-                    <Button type="submit" className="w-full">
-                      Confirmar
-                    </Button>
+                    {msg && (
+                      <p
+                        className={cn(
+                          "text-sm text-center",
+                          msgType === "error"
+                            ? "text-input-text-error"
+                            : "text-emerald-600"
+                        )}
+                      >
+                        {msg}
+                      </p>
+                    )}
+
+                    <div className="flex items-center justify-between gap-2">
+                      <Button
+                        type="button"
+                        className="rounded-full flex-1"
+                        variant="outline"
+                        onClick={handleResend}
+                        disabled={isLoading}
+                      >
+                        Reenviar código
+                      </Button>
+                      <Button
+                        type="submit"
+                        className="flex-1"
+                        disabled={isLoading || !/^\d{6}$/.test(otp)}
+                      >
+                        {isLoading ? "Confirmando..." : "Confirmar"}
+                      </Button>
+                    </div>
                   </form>
                 )}
               </div>
