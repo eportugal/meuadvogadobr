@@ -517,15 +517,18 @@ export default function SignUpFlowLawyerStatic() {
                         abaixo para confirmar sua conta.
                       </p>
                       <div className="flex justify-center">
-                        <InputOTP maxLength={6}>
+                        <InputOTP maxLength={6} value={otp} onChange={setOtp}>
                           <InputOTPGroup>
                             <InputOTPSlot index={0} />
                             <InputOTPSlot index={1} />
-                            <InputOTPSlot index={2} />
                           </InputOTPGroup>
                           <InputOTPSeparator />
                           <InputOTPGroup>
+                            <InputOTPSlot index={2} />
                             <InputOTPSlot index={3} />
+                          </InputOTPGroup>
+                          <InputOTPSeparator />
+                          <InputOTPGroup>
                             <InputOTPSlot index={4} />
                             <InputOTPSlot index={5} />
                           </InputOTPGroup>
